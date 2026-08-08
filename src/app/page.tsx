@@ -1,67 +1,58 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
+
+import { useEffect, useState } from "react";
+import SidebarNav from "@/components/SidebarNav";
+import HeroSection from "@/components/HeroSection";
+import SelectedWorkSection from "@/components/SelectedWorkSection";
+import ApproachAndToolsSection from "@/components/ApproachAndToolsSection";
+import JournalSection from "@/components/JournalSection";
+import AboutSection from "@/components/AboutSection";
+import ContactSection from "@/components/ContactSection";
 
 export default function Home() {
+  const [activeSection, setActiveSection] = useState("home");
+
+  useEffect(() => {
+    const sectionIds = ["home", "work", "journal", "about", "contact"];
+    
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + 250;
+
+      for (let i = sectionIds.length - 1; i >= 0; i--) {
+        const section = document.getElementById(sectionIds[i]);
+        if (section) {
+          const top = section.offsetTop;
+          if (scrollPosition >= top) {
+            setActiveSection(sectionIds[i]);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>
-            To get started, edit the{" "}
-            <code className={styles.code}>page.tsx</code> file.
-          </h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+    <div className="min-h-screen bg-[#0f0f0f] text-[#f0f0f0]">
+      {/* Permanent Solid Black Desktop Navigation Sidebar & Mobile Header */}
+      <SidebarNav activeSection={activeSection} />
+
+      {/* Main Content Area (Offset by desktop sidebar width) */}
+      <main className="md:ml-64 lg:ml-72">
+        {/* Light Warm Beige Hero Section */}
+        <HeroSection />
+
+        {/* Dark Charcoal Lower Sections */}
+        <div className="px-6 sm:px-10 md:px-14 lg:px-20 max-w-[1440px] mx-auto">
+          <SelectedWorkSection />
+          <ApproachAndToolsSection />
+          <JournalSection />
+          <AboutSection />
+          <ContactSection />
         </div>
       </main>
     </div>
