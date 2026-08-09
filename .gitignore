@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local analytics telemetry & session recordings
+src/data/analytics.json
+src/data/sessions/

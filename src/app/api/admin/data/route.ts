@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { getPortfolioData, savePortfolioData } from "@/lib/data";
+import { getPortfolioDataAsync, savePortfolioDataAsync } from "@/lib/data";
 import { revalidatePath } from "next/cache";
 
 export async function GET() {
-  const data = getPortfolioData();
+  const data = await getPortfolioDataAsync();
   return NextResponse.json(data);
 }
 
@@ -18,7 +18,7 @@ export async function POST(request: Request) {
 
   try {
     const body = await request.json();
-    const success = savePortfolioData(body);
+    const success = await savePortfolioDataAsync(body);
 
     if (success) {
       revalidatePath("/");

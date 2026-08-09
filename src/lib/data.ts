@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import { Redis } from "@upstash/redis";
 
 export interface Project {
   num: string;
@@ -41,6 +42,8 @@ export interface AwardItem {
   title: string;
   year: string;
   category: string;
+  description?: string;
+  organization?: string;
 }
 
 export interface HeroConfig {
@@ -108,6 +111,21 @@ export interface PortfolioData {
 }
 
 const dataFilePath = path.join(process.cwd(), "src", "data", "portfolio-data.json");
+const REDIS_KEY = "portfolio_data";
+
+function getRedisClient() {
+  const url = process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL;
+  const token = process.env.UPSTASH_REDIS_REST_TOKEN || process.env.KV_REST_API_TOKEN;
+
+  if (url && token) {
+    try {
+      return new Redis({ url, token });
+    } catch (err) {
+      console.warn("Failed to initialize Upstash Redis client:", err);
+    }
+  }
+  return null;
+}
 
 export function getPortfolioData(): PortfolioData {
   try {
@@ -173,6 +191,60 @@ export function getPortfolioData(): PortfolioData {
       footerText: "© 2026 Hasinthaka Piyumal. All rights reserved.",
     },
   };
+}
+
+export async function getPortfolioDataAsync(): Promise<PortfolioData> {
+  const redis = getRedisClient();
+
+  if (redis) {
+    try {
+      const redisData = await redis.get<PortfolioData>(REDIS_KEY);
+      if (redisData && redisData.hero) {
+        return redisData;
+      }
+
+      // First run: Seed Upstash Redis with current local JSON contents
+      const localData = getPortfolioData();
+      await redis.set(REDIS_KEY, localData);
+      return localData;
+    } catch (err) {
+      console.warn("Upstash Redis fetch error, falling back to local file:", err);
+    }
+  }
+
+  return getPortfolioData();
+}
+
+export async function savePortfolioDataAsync(data: PortfolioData): Promise<boolean> {
+  const updatedData: PortfolioData = {
+    ...data,
+    lastUpdated: new Date().toLocaleDateString("en-US", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    }) + " by Hasinthaka",
+  };
+
+  const redis = getRedisClient();
+
+  if (redis) {
+    try {
+      await redis.set(REDIS_KEY, updatedData);
+    } catch (err) {
+      console.warn("Upstash Redis save error:", err);
+    }
+  }
+
+  // Always save to local file as backup
+  try {
+    fs.writeFileSync(dataFilePath, JSON.stringify(updatedData, null, 2), "utf8");
+    return true;
+  } catch (error) {
+    console.error("Error saving portfolio data file:", error);
+    return !!redis; // Return true if saved to Redis
+  }
 }
 
 export function savePortfolioData(data: PortfolioData): boolean {

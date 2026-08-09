@@ -1,5 +1,6 @@
 import { writeFile, readFile, mkdir } from "fs/promises";
 import path from "path";
+import { Redis } from "@upstash/redis";
 
 export interface VisitorLog {
   id: string;
@@ -25,13 +26,44 @@ export interface AnalyticsStore {
 
 const DATA_DIR = path.join(process.cwd(), "src", "data");
 const ANALYTICS_FILE = path.join(DATA_DIR, "analytics.json");
+const REDIS_ANALYTICS_KEY = "portfolio_analytics";
 
 const defaultStore: AnalyticsStore = {
   totalViews: 0,
   logs: [],
 };
 
+function getRedisClient() {
+  const url = process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL;
+  const token = process.env.UPSTASH_REDIS_REST_TOKEN || process.env.KV_REST_API_TOKEN;
+
+  if (url && token) {
+    try {
+      return new Redis({ url, token });
+    } catch (err) {
+      console.warn("Failed to initialize Redis for analytics:", err);
+    }
+  }
+  return null;
+}
+
 export async function getAnalyticsStore(): Promise<AnalyticsStore> {
+  const redis = getRedisClient();
+
+  if (redis) {
+    try {
+      const data = await redis.get<AnalyticsStore>(REDIS_ANALYTICS_KEY);
+      if (data && typeof data.totalViews === "number") {
+        return {
+          totalViews: data.totalViews || 0,
+          logs: Array.isArray(data.logs) ? data.logs : [],
+        };
+      }
+    } catch (err) {
+      console.warn("Upstash Redis analytics fetch error, falling back to local file:", err);
+    }
+  }
+
   try {
     await mkdir(DATA_DIR, { recursive: true });
     const fileData = await readFile(ANALYTICS_FILE, "utf-8");
@@ -46,16 +78,26 @@ export async function getAnalyticsStore(): Promise<AnalyticsStore> {
 }
 
 export async function saveAnalyticsStore(store: AnalyticsStore): Promise<void> {
+  const trimmedStore: AnalyticsStore = {
+    totalViews: store.totalViews,
+    logs: store.logs.slice(0, 1000),
+  };
+
+  const redis = getRedisClient();
+
+  if (redis) {
+    try {
+      await redis.set(REDIS_ANALYTICS_KEY, trimmedStore);
+    } catch (err) {
+      console.warn("Upstash Redis analytics save error:", err);
+    }
+  }
+
   try {
     await mkdir(DATA_DIR, { recursive: true });
-    // Keep last 1000 logs to keep store lightweight and fast
-    const trimmedStore: AnalyticsStore = {
-      totalViews: store.totalViews,
-      logs: store.logs.slice(0, 1000),
-    };
     await writeFile(ANALYTICS_FILE, JSON.stringify(trimmedStore, null, 2), "utf-8");
   } catch (err) {
-    console.error("Error saving analytics store:", err);
+    console.error("Error saving local analytics file:", err);
   }
 }
 
