@@ -198,7 +198,7 @@
         "Identity Server",
         "APIM"
       ],
-      "logo": "/images/experience/wso2.png"
+      "logo": "/images/experience/wso2.webp"
     },
     {
       "role": "Full Stack Developer",
@@ -212,7 +212,7 @@
         "Node.js",
         "PostgreSQL"
       ],
-      "logo": "/images/experience/freelancer.png"
+      "logo": "/images/experience/freelancer.webp"
     },
     {
       "role": "Software Engineer",
@@ -226,7 +226,7 @@
         "Docker",
         "Azure"
       ],
-      "logo": "/images/experience/zenlise.png"
+      "logo": "/images/experience/zenlise.webp"
     }
   ],
   "research": [

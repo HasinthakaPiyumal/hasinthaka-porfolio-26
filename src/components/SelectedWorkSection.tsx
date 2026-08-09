@@ -600,7 +600,7 @@ export default function SelectedWorkSection() {
         <div className="xl:col-span-5 xl:sticky xl:top-20 h-fit w-full flex items-center justify-center mt-6 xl:mt-0">
           <div className="relative w-full max-w-sm sm:max-w-md xl:max-w-md flex items-center justify-center">
             <Image
-              src="/images/how-i-think-transparent.png"
+              src="/images/how-i-think-transparent.webp"
               alt="How I Think Diagram Transparent Paper Notepad"
               width={1400}
               height={1750}

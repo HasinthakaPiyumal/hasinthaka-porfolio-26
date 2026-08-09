@@ -13,7 +13,7 @@ const defaultExperiences: ExperienceItem[] = [
     period: "2026 - Present",
     description: "Architecting automated app publishing microservices, deployment pipelines in Go & Python, task queues with Redis, and Azure cloud infrastructure.",
     tags: ["Go", "Python", "Redis", "Docker", "Azure"],
-    logo: "/images/experience/zenlise.png",
+    logo: "/images/experience/zenlise.webp",
   },
   {
     role: "Engineering Intern",
@@ -21,7 +21,7 @@ const defaultExperiences: ExperienceItem[] = [
     period: "2025 - 2026",
     description: "Contributed to enterprise middleware & identity management solutions, REST API integrations, and cloud-native backend service optimization.",
     tags: ["Java", "Spring Boot", "Ballerina", "Identity Server", "APIM"],
-    logo: "/images/experience/wso2.png",
+    logo: "/images/experience/wso2.webp",
   },
   {
     role: "Full Stack Developer",
@@ -29,7 +29,7 @@ const defaultExperiences: ExperienceItem[] = [
     period: "2023 - Present",
     description: "Building scalable web & mobile apps for international clients using React, Next.js, Flutter, and cloud database architectures.",
     tags: ["React", "Next.js", "Flutter", "Node.js", "PostgreSQL"],
-    logo: "/images/experience/freelancer.png",
+    logo: "/images/experience/freelancer.webp",
   },
 ];
 
@@ -69,7 +69,7 @@ export default function ExperienceSection() {
               {/* Logo Box - Desktop View (Hidden on mobile) */}
               <div className="hidden sm:flex w-12 h-12 sm:w-14 sm:h-14 relative rounded-xl border border-[#262626] bg-[#161616] items-center justify-center shrink-0 shadow-inner group-hover:border-[#568f5e]/50 transition-colors overflow-hidden">
                 <Image
-                  src={exp.logo || "/images/experience/freelancer.png"}
+                  src={exp.logo || "/images/experience/freelancer.webp"}
                   alt={exp.company}
                   width={48}
                   height={48}
@@ -84,7 +84,7 @@ export default function ExperienceSection() {
                 <div className="flex items-center gap-3 sm:hidden mb-1">
                   <div className="w-9 h-9 relative rounded-lg border border-[#262626] bg-[#161616] flex items-center justify-center shrink-0 overflow-hidden">
                     <Image
-                      src={exp.logo || "/images/experience/freelancer.png"}
+                      src={exp.logo || "/images/experience/freelancer.webp"}
                       alt={exp.company}
                       width={36}
                       height={36}

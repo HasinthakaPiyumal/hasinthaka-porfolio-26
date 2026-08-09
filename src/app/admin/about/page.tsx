@@ -2,12 +2,13 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { Save, User, CheckCircle2, ExternalLink, Plus, X } from "lucide-react";
+import { Save, User, CheckCircle2, ExternalLink, Plus, X, Upload, Camera } from "lucide-react";
 import type { PortfolioData } from "@/lib/data";
 
 export default function AdminAboutPage() {
   const [data, setData] = useState<PortfolioData | null>(null);
   const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
 
   useEffect(() => {
@@ -35,6 +36,38 @@ export default function AdminAboutPage() {
       console.error(err);
     } finally {
       setSaving(false);
+    }
+  };
+
+  const handleProfileImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !data) return;
+
+    setUploading(true);
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const res = await fetch("/api/admin/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      const result = await res.json();
+      if (res.ok && result.url) {
+        setData({
+          ...data,
+          about: { ...data.about, profileImage: result.url },
+        });
+        setToast("Profile photo uploaded!");
+        setTimeout(() => setToast(null), 3000);
+      } else {
+        alert(result.error || "Photo upload failed");
+      }
+    } catch (err) {
+      console.error("Upload error:", err);
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -72,20 +105,34 @@ export default function AdminAboutPage() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* Left Column: Portrait & Narrative */}
         <div className="lg:col-span-7 bg-[#101010] border border-[#1e1e1e] rounded-2xl p-6 space-y-4">
-          <div className="flex items-center gap-4">
-            <div className="w-16 h-16 relative rounded-xl border border-[#2a2a2a] bg-[#161616] overflow-hidden shrink-0">
-              <Image src={data.about.profileImage || "/images/about-portrait.jpg"} alt="Portrait" fill className="object-cover" unoptimized />
+          
+          {/* Profile Photo Uploader Section */}
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 bg-[#141414] p-4 rounded-xl border border-[#222222]">
+            <div className="w-20 h-20 relative rounded-xl border border-[#2a2a2a] bg-[#161616] overflow-hidden shrink-0 shadow-md">
+              <Image src={data.about.profileImage || "/images/about-portrait.jpg"} alt="Profile Photo" fill className="object-cover" unoptimized />
             </div>
 
-            <div className="space-y-1 flex-1">
-              <label className="text-[11px] text-gray-400 uppercase font-semibold block">Full Name</label>
-              <input
-                type="text"
-                value={data.about.fullName}
-                onChange={(e) => setData({ ...data, about: { ...data.about, fullName: e.target.value } })}
-                className="w-full bg-[#161616] border border-[#262626] rounded-xl px-3 py-1.5 text-xs text-white font-bold"
-              />
+            <div className="space-y-2 flex-1 w-full">
+              <label className="text-[11px] text-gray-400 uppercase font-semibold block">Profile Photo</label>
+              <div className="flex items-center gap-2 flex-wrap">
+                <label className="px-3.5 py-1.5 bg-[#568f5e] hover:bg-[#487a4f] text-white text-xs font-semibold rounded-lg flex items-center gap-1.5 transition-colors cursor-pointer shadow-md">
+                  <Camera size={13} />
+                  <span>{uploading ? "Uploading Photo..." : "Upload New Photo"}</span>
+                  <input type="file" accept="image/*" onChange={handleProfileImageUpload} disabled={uploading} className="hidden" />
+                </label>
+                <span className="text-[10px] text-gray-500 font-mono">PNG, JPG or WEBP (Vercel Storage)</span>
+              </div>
             </div>
+          </div>
+
+          <div className="space-y-1">
+            <label className="text-[11px] text-gray-400 uppercase font-semibold block">Full Name</label>
+            <input
+              type="text"
+              value={data.about.fullName}
+              onChange={(e) => setData({ ...data, about: { ...data.about, fullName: e.target.value } })}
+              className="w-full bg-[#161616] border border-[#262626] rounded-xl px-3.5 py-2 text-xs text-white font-bold"
+            />
           </div>
 
           <div>

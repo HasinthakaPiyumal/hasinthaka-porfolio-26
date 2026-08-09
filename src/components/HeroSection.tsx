@@ -58,6 +58,7 @@ export default function HeroSection() {
           alt="Hasinthaka Workspace"
           fill
           priority
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 70vw, 60vw"
           className="hidden md:block object-cover object-right lg:object-[right_center]"
         />
         {/* Mobile Background Image */}
@@ -66,6 +67,7 @@ export default function HeroSection() {
           alt="Hasinthaka Workspace Mobile"
           fill
           priority
+          sizes="100vw"
           className="block md:hidden object-cover object-bottom sm:object-center"
         />
         {/* Soft subtle gradient overlay on left for text readability */}

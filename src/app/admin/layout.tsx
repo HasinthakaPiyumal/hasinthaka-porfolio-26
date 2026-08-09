@@ -6,7 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { 
   Layout, Layers, User, Sparkles, FolderGit2, Briefcase, FileCode2, Award, Mail, 
-  Wrench, ExternalLink, LogOut, Lock, Key, ShieldAlert, CheckCircle2, Menu, X 
+  Wrench, ExternalLink, LogOut, Lock, Key, ShieldAlert, CheckCircle2, Menu, X, BarChart3 
 } from "lucide-react";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -17,9 +17,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const [loginError, setLoginError] = useState("");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  const [profileImage, setProfileImage] = useState<string>("/images/about-portrait.jpg");
+
   useEffect(() => {
     // Check if session cookie is valid
-    fetch("/api/admin/data")
+    fetch("/api/admin/auth")
       .then((res) => {
         if (res.ok) {
           setIsAuthenticated(true);
@@ -28,6 +30,15 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         }
       })
       .catch(() => setIsAuthenticated(false));
+
+    fetch("/api/admin/data")
+      .then((res) => res.json())
+      .then((d) => {
+        if (d && d.about && d.about.profileImage) {
+          setProfileImage(d.about.profileImage);
+        }
+      })
+      .catch(() => {});
   }, []);
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -123,6 +134,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   const navItems = [
     { href: "/admin", label: "Dashboard", icon: Layout },
+    { href: "/admin/analytics", label: "Analytics & Visitors", icon: BarChart3 },
     { href: "/admin/hero", label: "Hero Banner", icon: Layers },
     { href: "/admin/experience", label: "Experience", icon: Briefcase },
     { href: "/admin/projects", label: "Projects", icon: FolderGit2 },
@@ -256,7 +268,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <div className="flex items-center justify-between gap-2 p-2 rounded-lg bg-[#111111] border border-[#1f1f1f]">
             <div className="flex items-center gap-2.5 min-w-0">
               <div className="w-8 h-8 rounded-full bg-[#1e1e1e] border border-[#333] flex items-center justify-center overflow-hidden shrink-0">
-                <Image src="/images/about-portrait.jpg" alt="Admin" width={32} height={32} className="object-cover" unoptimized />
+                <Image src={profileImage} alt="Admin" width={32} height={32} className="object-cover w-full h-full" unoptimized />
               </div>
               <div className="min-w-0">
                 <div className="text-xs font-bold text-white truncate">Hasinthaka</div>

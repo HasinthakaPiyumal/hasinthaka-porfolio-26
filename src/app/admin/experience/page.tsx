@@ -8,9 +8,9 @@ import type { PortfolioData, ExperienceItem } from "@/lib/data";
 import { TechSearchSelect } from "@/components/TechSearchSelect";
 
 const PRESET_LOGOS = [
-  { name: "WSO2", path: "/images/experience/wso2.png" },
-  { name: "Freelancer", path: "/images/experience/freelancer.png" },
-  { name: "Zenlise", path: "/images/experience/zenlise.png" },
+  { name: "WSO2", path: "/images/experience/wso2.webp" },
+  { name: "Freelancer", path: "/images/experience/freelancer.webp" },
+  { name: "Zenlise", path: "/images/experience/zenlise.webp" },
 ];
 
 export default function AdminExperiencePage() {
@@ -130,7 +130,7 @@ export default function AdminExperiencePage() {
                 period: `${new Date().getFullYear()} - Present`,
                 description: "",
                 tags: ["React", "Node.js"],
-                logo: "/images/experience/freelancer.png",
+                logo: "/images/experience/freelancer.webp",
               },
             })
           }
@@ -183,7 +183,7 @@ export default function AdminExperiencePage() {
 
             <div className="flex items-start gap-4 flex-1">
               <div className="w-12 h-12 relative rounded-xl border border-[#262626] bg-[#161616] flex items-center justify-center shrink-0 overflow-hidden">
-                <Image src={exp.logo || "/images/experience/freelancer.png"} alt={exp.company} width={40} height={40} className="object-contain p-1" unoptimized />
+                <Image src={exp.logo || "/images/experience/freelancer.webp"} alt={exp.company} width={40} height={40} className="object-contain p-1" unoptimized />
               </div>
 
               <div className="space-y-1.5 flex-1">
@@ -342,7 +342,7 @@ export default function AdminExperiencePage() {
                   <div className="flex items-center gap-4">
                     <div className="w-14 h-14 bg-[#121212] border border-[#2c2c2c] rounded-xl flex items-center justify-center p-2 shrink-0 overflow-hidden relative">
                       <Image
-                        src={editingExp.exp.logo || "/images/experience/freelancer.png"}
+                        src={editingExp.exp.logo || "/images/experience/freelancer.webp"}
                         alt="Logo preview"
                         width={44}
                         height={44}
@@ -356,7 +356,7 @@ export default function AdminExperiencePage() {
                         type="text"
                         value={editingExp.exp.logo || ""}
                         onChange={(e) => setEditingExp({ ...editingExp, exp: { ...editingExp.exp, logo: e.target.value } })}
-                        placeholder="/images/experience/logo.png"
+                        placeholder="/images/experience/logo.webp"
                         className="w-full bg-[#121212] border border-[#262626] rounded-xl px-3.5 py-2 text-xs text-white font-mono"
                       />
 
