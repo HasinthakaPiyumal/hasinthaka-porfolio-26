@@ -3,9 +3,13 @@ import { createPortal } from "react-dom";
 import Image from "next/image";
 import { ArrowUpRight, X, ChevronLeft, ChevronRight, CheckCircle, ExternalLink, FileText } from "lucide-react";
 import AISparkleIcon from "./icons/AISparkleIcon";
+import dynamic from "next/dynamic";
 import SpotlightCard from "./SpotlightCard";
-import ProjectArchiveModal from "./ProjectArchiveModal";
 import { motion, AnimatePresence } from "framer-motion";
+
+const ProjectArchiveModal = dynamic(() => import("./ProjectArchiveModal"), {
+  ssr: false,
+});
 
 function GithubIcon({ className = "w-4 h-4" }: { className?: string }) {
   return (
@@ -334,7 +338,7 @@ export default function SelectedWorkSection() {
       .catch((err) => console.error("Error fetching projects:", err));
   }, []);
 
-  const publishedProjects = projectList.filter((p) => p.status !== "Draft");
+  const publishedProjects = projectList.filter((p) => p.status !== "Draft" && p.title && p.title.trim() !== "");
   const featuredProjects = publishedProjects.filter((p) => p.featured);
   const displayProjects = featuredProjects.length > 0 ? featuredProjects : publishedProjects.slice(0, 6);
 
@@ -539,14 +543,15 @@ export default function SelectedWorkSection() {
         
         {/* Left Column: Featured Projects Container */}
         <SpotlightCard className="xl:col-span-7 bg-[#111111] border border-[#202020] rounded-xl overflow-hidden divide-y divide-[#202020] shadow-2xl">
-          {displayProjects.map((project) => {
+          {displayProjects.map((project, idx) => {
             const projectImages = project.images && project.images.length > 0 ? project.images : ["/images/projects/zenlise.jpg"];
             const projectTags = project.tags || [];
+            const displayNum = String(idx + 1).padStart(2, "0");
 
             return (
               <div
-                key={project.title + project.num}
-                onClick={() => setSelectedProject({ ...project, images: projectImages, tags: projectTags })}
+                key={project.title + idx}
+                onClick={() => setSelectedProject({ ...project, num: displayNum, images: projectImages, tags: projectTags })}
                 className="group p-4 sm:p-5 hover:bg-[#151515] transition-colors duration-300 flex flex-col sm:flex-row items-start sm:items-center gap-3.5 sm:gap-4 cursor-pointer"
               >
                 {/* Text Information Column */}
@@ -554,7 +559,7 @@ export default function SelectedWorkSection() {
                   {/* Number Anchor (Desktop only) */}
                   <div className="hidden sm:flex flex-col items-center shrink-0 pt-0.5 self-stretch">
                     <span className="text-xs font-mono font-bold text-[#568f5e]">
-                      {project.num}
+                      {displayNum}
                     </span>
                     <div className="w-[1px] flex-1 bg-[#242424] my-1.5 min-h-[32px] relative">
                       <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-[#3a3a3a] group-hover:bg-[#568f5e] transition-colors" />
@@ -565,7 +570,7 @@ export default function SelectedWorkSection() {
                   <div className="flex-1 min-w-0 space-y-1.5">
                     <h3 className="text-sm sm:text-base font-mono font-semibold text-white group-hover:text-[#568f5e] transition-colors tracking-tight flex items-center justify-between gap-2">
                       <div className="flex items-center min-w-0">
-                        <span className="text-[#568f5e] font-bold mr-2 sm:hidden">{project.num}</span>
+                        <span className="text-[#568f5e] font-bold mr-2 sm:hidden">{displayNum}</span>
                         <span className="truncate">{project.title}</span>
                       </div>
                       <ArrowUpRight size={16} className="text-gray-500 group-hover:text-[#568f5e] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0" />
@@ -604,7 +609,7 @@ export default function SelectedWorkSection() {
               alt="How I Think Diagram Transparent Paper Notepad"
               width={1400}
               height={1750}
-              priority
+              loading="lazy"
               unoptimized
               className="w-full h-auto object-contain drop-shadow-[0_25px_60px_rgba(0,0,0,0.95)]"
             />

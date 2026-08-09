@@ -216,8 +216,16 @@ export async function getPortfolioDataAsync(): Promise<PortfolioData> {
 }
 
 export async function savePortfolioDataAsync(data: PortfolioData): Promise<boolean> {
+  const sanitizedProjects = (data.projects || [])
+    .filter((p) => p.title && p.title.trim() !== "")
+    .map((p, i) => ({
+      ...p,
+      num: String(i + 1).padStart(2, "0"),
+    }));
+
   const updatedData: PortfolioData = {
     ...data,
+    projects: sanitizedProjects,
     lastUpdated: new Date().toLocaleDateString("en-US", {
       day: "numeric",
       month: "short",
@@ -249,8 +257,16 @@ export async function savePortfolioDataAsync(data: PortfolioData): Promise<boole
 
 export function savePortfolioData(data: PortfolioData): boolean {
   try {
+    const sanitizedProjects = (data.projects || [])
+      .filter((p) => p.title && p.title.trim() !== "")
+      .map((p, i) => ({
+        ...p,
+        num: String(i + 1).padStart(2, "0"),
+      }));
+
     const updatedData = {
       ...data,
+      projects: sanitizedProjects,
       lastUpdated: new Date().toLocaleDateString("en-US", {
         day: "numeric",
         month: "short",

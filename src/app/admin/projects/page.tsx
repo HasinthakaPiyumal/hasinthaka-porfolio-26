@@ -288,7 +288,7 @@ export default function AdminProjectsPage() {
                   } else {
                     newP.unshift(editingProject.project);
                   }
-                  handleSaveData({ ...data, projects: newP });
+                  handleReorder(newP);
                   setEditingProject(null);
                 }}
                 className="px-6 py-2 bg-[#568f5e] hover:bg-[#487a4f] text-xs text-white font-semibold rounded-xl cursor-pointer shadow-lg flex items-center gap-1.5 transition-all"

@@ -29,25 +29,6 @@
   },
   "projects": [
     {
-      "num": "07",
-      "title": "",
-      "category": "Full-Stack",
-      "year": "2026",
-      "date": "Aug 2025",
-      "status": "Published",
-      "description": "",
-      "fullDescription": "",
-      "tags": [
-        "Next.js",
-        "React"
-      ],
-      "images": [
-        "/images/projects/zenlise.jpg",
-        "/images/experience/1786276538252-hero-mobile-final.webp"
-      ],
-      "featured": true
-    },
-    {
       "num": "01",
       "title": "Zenlise Platform",
       "category": "SaaS",
@@ -71,7 +52,7 @@
       ],
       "githubUrl": "https://github.com/HasinthakaPiyumal",
       "demoUrl": "https://zenlise.dev",
-      "featured": false
+      "featured": true
     },
     {
       "num": "02",
@@ -120,7 +101,7 @@
       "featured": true
     },
     {
-      "num": "06",
+      "num": "04",
       "title": "Distributed Task Queue Engine",
       "category": "Backend & AI",
       "year": "2025",
@@ -141,7 +122,7 @@
       "featured": false
     },
     {
-      "num": "07",
+      "num": "05",
       "title": "WSO2 Enterprise Gateway Extension Suite",
       "category": "Open Source",
       "year": "2025",
@@ -163,7 +144,7 @@
       "featured": false
     },
     {
-      "num": "08",
+      "num": "06",
       "title": "Call-Graph AI Pattern Extractor",
       "category": "Backend & AI",
       "year": "2024",

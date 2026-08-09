@@ -67,6 +67,7 @@ export default function HeroSection() {
           alt="Hasinthaka Workspace Mobile"
           fill
           priority
+          fetchPriority="high"
           sizes="100vw"
           className="block md:hidden object-cover object-bottom sm:object-center"
         />
