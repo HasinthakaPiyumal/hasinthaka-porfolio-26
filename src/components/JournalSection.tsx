@@ -1,6 +1,7 @@
 "use client";
 
-import { ArrowUpRight, Award, Sparkles } from "lucide-react";
+import { ArrowUpRight, Award } from "lucide-react";
+import AISparkleIcon from "./icons/AISparkleIcon";
 
 const researchItems = [
   {
@@ -25,8 +26,8 @@ export default function JournalSection() {
   return (
     <div className="space-y-6">
       
-      {/* Header */}
-      <div className="flex items-center justify-between mb-6">
+      {/* Section Header */}
+      <div className="flex items-center justify-between mb-4 sm:mb-6">
         <h2 className="text-xs sm:text-sm font-mono tracking-widest text-gray-400 uppercase flex items-center gap-2.5">
           <span className="text-[#568f5e] font-bold">05 /</span>
           <span className="text-white font-semibold">RESEARCH & PUBLICATIONS</span>
@@ -36,7 +37,7 @@ export default function JournalSection() {
           href="https://arxiv.org/abs/2607.00558"
           target="_blank"
           rel="noreferrer"
-          className="group inline-flex items-center gap-1.5 text-xs font-mono text-gray-400 hover:text-[#568f5e] transition-colors"
+          className="group inline-flex items-center gap-2 text-xs font-mono text-gray-400 hover:text-[#568f5e] transition-colors py-1.5"
         >
           <span>READ PAPER</span>
           <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -51,35 +52,35 @@ export default function JournalSection() {
             href={item.href}
             target={item.href.startsWith("http") ? "_blank" : "_self"}
             rel="noreferrer"
-            className="group p-6 sm:p-7 flex flex-col sm:flex-row items-start justify-between gap-5 hover:bg-[#151515] transition-colors duration-300"
+            className="group p-3.5 sm:p-6 flex flex-col sm:flex-row items-start justify-between gap-3 sm:gap-5 hover:bg-[#151515] transition-colors duration-300"
           >
             {/* Left Citation Label */}
-            <div className="text-xs font-mono font-bold text-[#568f5e] tracking-wider shrink-0 w-36 sm:pt-0.5">
+            <div className="text-[11px] sm:text-xs font-mono font-bold text-[#568f5e] tracking-wider shrink-0 w-36 sm:pt-0.5">
               {item.citation}
             </div>
 
             {/* Middle Content & Tags */}
-            <div className="flex-1 space-y-2.5">
+            <div className="flex-1 space-y-1.5">
               <div className="flex flex-wrap items-center gap-2.5">
-                <h3 className="text-base sm:text-lg font-mono font-semibold text-white group-hover:text-[#568f5e] transition-colors leading-snug">
+                <h3 className="text-sm sm:text-base md:text-lg font-mono font-semibold text-white group-hover:text-[#568f5e] transition-colors leading-snug">
                   {item.title}
                 </h3>
                 
                 {/* Badge Tag */}
                 {item.badgeType === "award" ? (
-                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-[#568f5e]/15 border border-[#568f5e]/40 text-[#568f5e] text-[11px] font-mono font-bold">
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-[#568f5e]/15 border border-[#568f5e]/40 text-[#568f5e] text-[10px] sm:text-[11px] font-mono font-bold">
                     <Award size={12} />
                     <span>{item.badge}</span>
                   </span>
                 ) : (
-                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-[#1d271f] border border-[#2e4431] text-[#69ab73] text-[11px] font-mono font-semibold">
-                    <Sparkles size={12} />
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-[#1d271f] border border-[#2e4431] text-[#69ab73] text-[10px] sm:text-[11px] font-mono font-semibold">
+                    <AISparkleIcon size={12} />
                     <span>{item.badge}</span>
                   </span>
                 )}
               </div>
 
-              <p className="text-xs font-mono text-gray-400 leading-relaxed max-w-3xl">
+              <p className="text-[11px] sm:text-xs font-mono text-gray-400 leading-relaxed max-w-3xl">
                 {item.summary}
               </p>
             </div>

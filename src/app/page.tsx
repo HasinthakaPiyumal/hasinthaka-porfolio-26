@@ -19,12 +19,27 @@ export default function Home() {
     
     const handleScroll = () => {
       const scrollPosition = window.scrollY + 250;
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+
+      // Bottom of page check -> highlight contact section
+      if (window.scrollY + windowHeight >= documentHeight - 50) {
+        setActiveSection("contact");
+        return;
+      }
+
+      // Top of page / Hero section check -> highlight home section
+      if (window.scrollY < 150) {
+        setActiveSection("home");
+        return;
+      }
 
       for (let i = sectionIds.length - 1; i >= 0; i--) {
         const section = document.getElementById(sectionIds[i]);
         if (section) {
-          const top = section.offsetTop;
-          if (scrollPosition >= top) {
+          const rect = section.getBoundingClientRect();
+          const absoluteTop = rect.top + window.scrollY;
+          if (scrollPosition >= absoluteTop) {
             setActiveSection(sectionIds[i]);
             break;
           }
@@ -48,14 +63,14 @@ export default function Home() {
         {/* Light Warm Beige Hero Section */}
         <HeroSection />
 
-        {/* Dark Charcoal Lower Sections */}
-        <div className="px-6 sm:px-10 md:px-12 lg:px-16 max-w-[1440px] mx-auto">
+        {/* Dark Charcoal Lower Sections - Solid Background */}
+        <div className="relative z-10 bg-[#0f0f0f] px-5 sm:px-10 md:px-12 lg:px-16 max-w-[1440px] mx-auto">
           <ExperienceSection />
           <SelectedWorkSection />
           <ApproachAndToolsSection />
           
           {/* Section 05: RESEARCH & PUBLICATIONS */}
-          <div className="py-20 md:py-28 border-t border-[#1e1e1e]" id="journal">
+          <div className="py-10 md:py-24 border-t border-[#1e1e1e]" id="journal">
             <JournalSection />
           </div>
 
@@ -63,7 +78,7 @@ export default function Home() {
           <AwardsSection />
 
           {/* Section 07: ABOUT ME */}
-          <div className="py-20 md:py-28 border-t border-[#1e1e1e]" id="about">
+          <div className="py-10 md:py-24 border-t border-[#1e1e1e]" id="about">
             <AboutSection />
           </div>
 

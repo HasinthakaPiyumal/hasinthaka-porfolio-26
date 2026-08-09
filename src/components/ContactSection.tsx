@@ -20,103 +20,103 @@ function LinkedinIcon({ className = "w-5 h-5" }: { className?: string }) {
 
 export default function ContactSection() {
   return (
-    <section id="contact" className="pt-20 pb-12 border-t border-[#1e1e1e]">
+    <section id="contact" className="pt-10 pb-8 md:pt-20 md:pb-12 border-t border-[#1e1e1e]">
       
       {/* Header */}
-      <h2 className="text-xs sm:text-sm font-mono tracking-widest text-gray-400 uppercase flex items-center gap-2.5 mb-8">
+      <h2 className="text-xs sm:text-sm font-mono tracking-widest text-gray-400 uppercase flex items-center gap-2.5 mb-5 sm:mb-8">
         <span className="text-[#568f5e] font-bold">08 /</span>
         <span className="text-white font-semibold">LET&apos;S CONNECT</span>
       </h2>
 
       {/* Main Unified Box Container */}
-      <div className="bg-[#111111] border border-[#202020] rounded-xl p-6 sm:p-10 shadow-2xl space-y-8 mb-16">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+      <div className="bg-[#111111] border border-[#202020] rounded-xl p-3.5 sm:p-10 shadow-2xl space-y-5 sm:space-y-8 mb-6 sm:mb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-12 items-center">
           
           {/* Left Column: Comfortable Headline & Call to Action (7 cols) */}
-          <div className="lg:col-span-7 space-y-5">
-            <h3 className="text-2xl sm:text-3xl lg:text-4xl font-mono font-bold text-white tracking-tight leading-tight">
+          <div className="lg:col-span-7 space-y-3 sm:space-y-4">
+            <h3 className="text-lg sm:text-3xl lg:text-4xl font-mono font-bold text-white tracking-tight leading-snug sm:leading-tight">
               Have an interesting project or just want to connect?{" "}
               <span className="text-[#568f5e] block sm:inline">I&apos;d love to hear from you.</span>
             </h3>
 
-            <p className="text-xs sm:text-sm font-mono text-gray-400 leading-relaxed max-w-xl">
+            <p className="text-[11px] sm:text-xs md:text-sm font-mono text-gray-400 leading-relaxed max-w-xl">
               Whether you need backend microservices, applied AI solutions, or full-stack web and mobile development, my inbox is always open.
             </p>
 
-            <div className="pt-2">
+            <div className="pt-1 sm:pt-2">
               <a
-                href="mailto:hasinthakapiyumal@gmail.com"
-                className="inline-flex items-center gap-2.5 px-5 py-3 rounded-lg bg-[#568f5e] hover:bg-[#487a4f] text-white font-mono text-xs font-semibold transition-all shadow-lg hover:shadow-[#568f5e]/20 group"
+                href="whatsapp://send?phone=94763215389&text=Hello%20Hasinthaka,%20I'd%20like%20to%20connect%20with%20you!"
+                className="inline-flex items-center gap-2 px-4 py-2.5 sm:px-5 sm:py-3 rounded-lg bg-[#568f5e] hover:bg-[#487a4f] text-white font-mono text-xs font-semibold transition-all shadow-lg hover:shadow-[#568f5e]/20 group"
               >
-                <Send size={15} />
+                <Send size={14} />
                 <span>Send a Message</span>
-                <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform" />
               </a>
             </div>
           </div>
 
           {/* Right Column: Contact Details Cards & Socials (5 cols) */}
-          <div className="lg:col-span-5 space-y-4 bg-[#161616] border border-[#242424] p-5 sm:p-6 rounded-xl shadow-inner">
-            <div className="space-y-3 text-xs font-mono text-gray-300">
+          <div className="lg:col-span-5 space-y-3 bg-[#161616] border border-[#242424] p-3.5 sm:p-6 rounded-xl shadow-inner">
+            <div className="space-y-2 text-xs font-mono text-gray-300">
               <a
                 href="mailto:hasinthakapiyumal@gmail.com"
-                className="flex items-center gap-3.5 p-3 rounded-lg bg-[#111111] border border-[#222222] hover:border-[#568f5e]/50 transition-colors group"
+                className="flex items-center gap-3 p-2.5 sm:p-3 rounded-lg bg-[#111111] border border-[#222222] hover:border-[#568f5e]/50 transition-colors group"
               >
-                <div className="w-8 h-8 rounded-md bg-[#1d1d1d] flex items-center justify-center text-[#568f5e] group-hover:bg-[#568f5e] group-hover:text-white transition-colors shrink-0">
-                  <Mail size={16} />
+                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-md bg-[#1d1d1d] flex items-center justify-center text-[#568f5e] group-hover:bg-[#568f5e] group-hover:text-white transition-colors shrink-0">
+                  <Mail size={15} />
                 </div>
                 <div className="flex-1 truncate">
-                  <div className="text-[10px] text-gray-500 uppercase tracking-wider">Email</div>
-                  <div className="text-gray-200 group-hover:text-white truncate">hasinthakapiyumal@gmail.com</div>
+                  <div className="text-[9px] sm:text-[10px] text-gray-500 uppercase tracking-wider">Email</div>
+                  <div className="text-gray-200 group-hover:text-white text-xs truncate">hasinthakapiyumal@gmail.com</div>
                 </div>
               </a>
 
               <a
                 href="tel:+94763215389"
-                className="flex items-center gap-3.5 p-3 rounded-lg bg-[#111111] border border-[#222222] hover:border-[#568f5e]/50 transition-colors group"
+                className="flex items-center gap-3 p-2.5 sm:p-3 rounded-lg bg-[#111111] border border-[#222222] hover:border-[#568f5e]/50 transition-colors group"
               >
-                <div className="w-8 h-8 rounded-md bg-[#1d1d1d] flex items-center justify-center text-[#568f5e] group-hover:bg-[#568f5e] group-hover:text-white transition-colors shrink-0">
-                  <Phone size={16} />
+                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-md bg-[#1d1d1d] flex items-center justify-center text-[#568f5e] group-hover:bg-[#568f5e] group-hover:text-white transition-colors shrink-0">
+                  <Phone size={15} />
                 </div>
                 <div className="flex-1">
-                  <div className="text-[10px] text-gray-500 uppercase tracking-wider">Phone</div>
-                  <div className="text-gray-200 group-hover:text-white">+94 76 321 5389</div>
+                  <div className="text-[9px] sm:text-[10px] text-gray-500 uppercase tracking-wider">Phone</div>
+                  <div className="text-gray-200 group-hover:text-white text-xs">+94 76 321 5389</div>
                 </div>
               </a>
 
-              <div className="flex items-center gap-3.5 p-3 rounded-lg bg-[#111111] border border-[#222222]">
-                <div className="w-8 h-8 rounded-md bg-[#1d1d1d] flex items-center justify-center text-[#568f5e] shrink-0">
-                  <MapPin size={16} />
+              <div className="flex items-center gap-3 p-2.5 sm:p-3 rounded-lg bg-[#111111] border border-[#222222]">
+                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-md bg-[#1d1d1d] flex items-center justify-center text-[#568f5e] shrink-0">
+                  <MapPin size={15} />
                 </div>
                 <div className="flex-1">
-                  <div className="text-[10px] text-gray-500 uppercase tracking-wider">Location</div>
-                  <div className="text-gray-200">Colombo, Sri Lanka</div>
+                  <div className="text-[9px] sm:text-[10px] text-gray-500 uppercase tracking-wider">Location</div>
+                  <div className="text-gray-200 text-xs">Colombo, Sri Lanka</div>
                 </div>
               </div>
             </div>
 
             {/* Social Links Bar */}
-            <div className="pt-3 border-t border-[#222222] space-y-2.5">
-              <div className="text-[10px] font-mono font-semibold text-gray-400 uppercase tracking-widest">
+            <div className="pt-2.5 border-t border-[#222222] space-y-2">
+              <div className="text-[9px] sm:text-[10px] font-mono font-semibold text-gray-400 uppercase tracking-widest">
                 FIND ME ONLINE
               </div>
-              <div className="flex items-center gap-2.5">
+              <div className="flex items-center gap-2">
                 <a
                   href="https://github.com/HasinthakaPiyumal"
                   target="_blank"
                   rel="noreferrer"
-                  className="flex-1 flex items-center justify-center gap-2 py-2 px-3 bg-[#111111] border border-[#222222] hover:border-[#568f5e]/50 text-gray-300 hover:text-white rounded-md text-xs font-mono transition-colors"
+                  className="flex-1 flex items-center justify-center gap-1.5 py-1.5 px-2.5 bg-[#111111] border border-[#222222] hover:border-[#568f5e]/50 text-gray-300 hover:text-white rounded-md text-xs font-mono transition-colors"
                 >
-                  <GithubIcon className="w-4 h-4" />
+                  <GithubIcon className="w-3.5 h-3.5" />
                   <span>GitHub</span>
                 </a>
                 <a
                   href="https://linkedin.com/in/hasinthaka-piyumal"
                   target="_blank"
                   rel="noreferrer"
-                  className="flex-1 flex items-center justify-center gap-2 py-2 px-3 bg-[#111111] border border-[#222222] hover:border-[#568f5e]/50 text-gray-300 hover:text-white rounded-md text-xs font-mono transition-colors"
+                  className="flex-1 flex items-center justify-center gap-1.5 py-1.5 px-2.5 bg-[#111111] border border-[#222222] hover:border-[#568f5e]/50 text-gray-300 hover:text-white rounded-md text-xs font-mono transition-colors"
                 >
-                  <LinkedinIcon className="w-4 h-4" />
+                  <LinkedinIcon className="w-3.5 h-3.5" />
                   <span>LinkedIn</span>
                 </a>
               </div>

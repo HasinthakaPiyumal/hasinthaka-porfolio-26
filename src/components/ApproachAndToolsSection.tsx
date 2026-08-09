@@ -6,24 +6,28 @@ import { motion } from "framer-motion";
 
 const approachItems = [
   {
+    num: "01",
     icon: Target,
     title: "Understand",
     description: "I start by understanding the problem, the users and the real constraints.",
     linkText: "Research",
   },
   {
+    num: "02",
     icon: Code2,
     title: "Build",
     description: "I write clean, maintainable code and design systems that scale and adapt.",
     linkText: "Engineering",
   },
   {
+    num: "03",
     icon: Rocket,
     title: "Deliver",
     description: "I ship reliable products with performance, security and great user experience.",
     linkText: "Deploy",
   },
   {
+    num: "04",
     icon: TrendingUp,
     title: "Improve",
     description: "I measure, learn and iterate to continuously make things better.",
@@ -31,11 +35,9 @@ const approachItems = [
   },
 ];
 
-// Clean monochrome SVG Icons matching screenshot
+// Clean monochrome SVG Icons
 function TSIcon() {
-  return (
-    <div className="font-mono text-xs sm:text-sm font-bold tracking-tight text-white">TS</div>
-  );
+  return <div className="font-mono text-xs sm:text-sm font-bold tracking-tight text-white">TS</div>;
 }
 
 function ReactIcon() {
@@ -50,9 +52,7 @@ function ReactIcon() {
 }
 
 function JSIcon() {
-  return (
-    <div className="font-mono text-xs sm:text-sm font-bold tracking-tight text-white">JS</div>
-  );
+  return <div className="font-mono text-xs sm:text-sm font-bold tracking-tight text-white">JS</div>;
 }
 
 function PythonIcon() {
@@ -100,21 +100,15 @@ function GitHubIcon() {
 }
 
 function JavaIcon() {
-  return (
-    <div className="font-mono text-[11px] sm:text-xs font-bold tracking-tighter text-white">Java</div>
-  );
+  return <div className="font-mono text-[11px] sm:text-xs font-bold tracking-tighter text-white">Java</div>;
 }
 
 function GoIcon() {
-  return (
-    <div className="font-mono text-[11px] sm:text-xs font-bold tracking-tighter text-white">Go</div>
-  );
+  return <div className="font-mono text-[11px] sm:text-xs font-bold tracking-tighter text-white">Go</div>;
 }
 
 function SpringIcon() {
-  return (
-    <div className="font-mono text-[10px] sm:text-[11px] font-bold tracking-tighter text-[#568f5e]">Spring</div>
-  );
+  return <div className="font-mono text-[10px] sm:text-[11px] font-bold tracking-tighter text-[#568f5e]">Spring</div>;
 }
 
 function FlutterIcon() {
@@ -126,15 +120,11 @@ function FlutterIcon() {
 }
 
 function RedisIcon() {
-  return (
-    <div className="font-mono text-[10px] sm:text-[11px] font-bold tracking-tighter text-white">Redis</div>
-  );
+  return <div className="font-mono text-[10px] sm:text-[11px] font-bold tracking-tighter text-white">Redis</div>;
 }
 
 function NextIcon() {
-  return (
-    <div className="font-mono text-[11px] sm:text-xs font-bold tracking-tighter text-white">Next</div>
-  );
+  return <div className="font-mono text-[11px] sm:text-xs font-bold tracking-tighter text-white">Next</div>;
 }
 
 const toolIcons = [
@@ -152,8 +142,12 @@ const toolIcons = [
   { name: "GitHub", icon: GitHubIcon },
 ];
 
-// Duplicated list for seamless infinite loop sliding
 const marqueeTools = [...toolIcons, ...toolIcons];
+
+const row1Tools = toolIcons.slice(0, 6);
+const row2Tools = toolIcons.slice(6, 12);
+const mobileMarqueeRow1 = [...row1Tools, ...row1Tools, ...row1Tools, ...row1Tools];
+const mobileMarqueeRow2 = [...row2Tools, ...row2Tools, ...row2Tools, ...row2Tools];
 
 export default function ApproachAndToolsSection() {
   const [isPageVisible, setIsPageVisible] = useState(true);
@@ -170,39 +164,53 @@ export default function ApproachAndToolsSection() {
   }, []);
 
   return (
-    <section className="py-16 md:py-24 border-t border-[#1e1e1e] space-y-12 md:space-y-16">
+    <section className="py-10 md:py-24 border-t border-[#1e1e1e] space-y-6 md:space-y-12">
       
-      {/* ROW 1: 03 / MY APPROACH */}
-      <div className="space-y-6">
+      {/* ROW 1: MY APPROACH */}
+      <div className="space-y-4">
         <h2 className="text-xs sm:text-sm font-mono tracking-widest text-gray-400 uppercase flex items-center gap-2.5">
-          <span className="text-[#568f5e] font-bold">03 /</span>
+          <span className="text-[#568f5e] font-bold">04 /</span>
           <span className="text-white font-semibold">MY APPROACH</span>
         </h2>
 
-        {/* Unified Container with Dividers */}
-        <div className="bg-[#111111] border border-[#202020] rounded-xl overflow-hidden divide-y sm:divide-y-0 sm:divide-x divide-[#202020] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 shadow-xl">
-          {approachItems.map((item) => {
+        {/* 2x2 Grid on Mobile, 4-Column Row on Desktop */}
+        <div className="bg-[#111111] border border-[#202020] rounded-xl overflow-hidden grid grid-cols-2 lg:grid-cols-4 shadow-xl">
+          {approachItems.map((item, index) => {
             const IconComponent = item.icon;
+            const borderClasses =
+              index === 0
+                ? "border-r border-b lg:border-b-0 border-[#202020]"
+                : index === 1
+                ? "border-b lg:border-r lg:border-b-0 border-[#202020]"
+                : index === 2
+                ? "border-r border-[#202020]"
+                : "";
+
             return (
               <div
                 key={item.title}
-                className="group p-5 sm:p-6 hover:bg-[#151515] transition-colors duration-300 flex flex-col justify-between space-y-4"
+                className={`group p-3 sm:p-6 hover:bg-[#151515] transition-colors duration-300 flex flex-col justify-between space-y-2 sm:space-y-3 ${borderClasses}`}
               >
-                <div className="space-y-3">
-                  <IconComponent size={22} className="text-gray-200 group-hover:text-[#568f5e] transition-colors stroke-[1.8]" />
+                <div className="space-y-1.5 sm:space-y-3">
+                  <div className="flex items-center justify-between">
+                    <IconComponent className="w-4 h-4 sm:w-5.5 sm:h-5.5 text-gray-200 group-hover:text-[#568f5e] transition-colors stroke-[1.8]" />
+                    <span className="text-[10px] sm:text-xs font-mono font-bold text-[#568f5e]/80">
+                      {item.num}
+                    </span>
+                  </div>
 
-                  <h3 className="text-sm sm:text-base font-mono font-semibold text-white group-hover:text-[#568f5e] transition-colors tracking-tight">
+                  <h3 className="text-xs sm:text-base font-mono font-semibold text-white group-hover:text-[#568f5e] transition-colors tracking-tight">
                     {item.title}
                   </h3>
 
-                  <p className="text-xs font-mono text-gray-400 leading-relaxed font-normal">
+                  <p className="text-[10px] sm:text-xs font-mono text-gray-400 leading-snug sm:leading-relaxed font-normal">
                     {item.description}
                   </p>
                 </div>
 
-                <div className="inline-flex items-center gap-1 text-xs font-mono font-medium text-[#568f5e] group-hover:translate-x-1 transition-transform pt-2">
+                <div className="inline-flex items-center gap-1 text-[10px] sm:text-xs font-mono font-medium text-[#568f5e] group-hover:translate-x-1 transition-transform pt-1 sm:pt-2">
                   <span>{item.linkText}</span>
-                  <ArrowRight size={12} />
+                  <ArrowRight className="w-3 h-3" />
                 </div>
               </div>
             );
@@ -211,7 +219,7 @@ export default function ApproachAndToolsSection() {
       </div>
 
       {/* ROW 2: TOOLS I USE */}
-      <div className="space-y-6">
+      <div className="space-y-5">
         <div className="flex items-center justify-between">
           <h2 className="text-xs sm:text-sm font-mono tracking-widest text-gray-400 uppercase font-semibold">
             TOOLS I USE
@@ -221,15 +229,67 @@ export default function ApproachAndToolsSection() {
           </span>
         </div>
 
-        {/* Infinite Smooth Sliding Marquee Container */}
-        <div className="bg-[#111111] border border-[#202020] p-4 sm:p-5 rounded-xl shadow-xl overflow-hidden relative">
-          {/* Subtle Side Fade Overlay Masks */}
-          <div className="absolute left-0 top-0 bottom-0 w-12 sm:w-16 bg-gradient-to-r from-[#111111] to-transparent z-10 pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-12 sm:w-16 bg-gradient-to-l from-[#111111] to-transparent z-10 pointer-events-none" />
+        {/* Mobile Two-Row Infinite Sliding Marquee (< md) */}
+        <div className="md:hidden bg-[#111111] border border-[#202020] p-3.5 rounded-xl shadow-xl overflow-hidden relative space-y-3">
+          <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-[#111111] to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-[#111111] to-transparent z-10 pointer-events-none" />
 
-          {/* Marquee Track */}
+          {/* Row 1: Sliding Left */}
           <motion.div
-            className="flex items-center gap-3 sm:gap-4 w-max"
+            className="flex items-center gap-3 w-max"
+            animate={isPageVisible ? { x: ["0%", "-50%"] } : undefined}
+            transition={{
+              ease: "linear",
+              duration: 18,
+              repeat: Infinity,
+            }}
+          >
+            {mobileMarqueeRow1.map((tool, idx) => {
+              const Icon = tool.icon;
+              return (
+                <div
+                  key={`mobile-r1-${tool.name}-${idx}`}
+                  className="w-12 h-12 bg-[#161616] border border-[#242424] active:border-[#568f5e] rounded-xl flex items-center justify-center p-2.5 shrink-0 shadow-sm"
+                  title={tool.name}
+                >
+                  <Icon />
+                </div>
+              );
+            })}
+          </motion.div>
+
+          {/* Row 2: Sliding Right */}
+          <motion.div
+            className="flex items-center gap-3 w-max"
+            animate={isPageVisible ? { x: ["-50%", "0%"] } : undefined}
+            transition={{
+              ease: "linear",
+              duration: 18,
+              repeat: Infinity,
+            }}
+          >
+            {mobileMarqueeRow2.map((tool, idx) => {
+              const Icon = tool.icon;
+              return (
+                <div
+                  key={`mobile-r2-${tool.name}-${idx}`}
+                  className="w-12 h-12 bg-[#161616] border border-[#242424] active:border-[#568f5e] rounded-xl flex items-center justify-center p-2.5 shrink-0 shadow-sm"
+                  title={tool.name}
+                >
+                  <Icon />
+                </div>
+              );
+            })}
+          </motion.div>
+        </div>
+
+        {/* Desktop Infinite Smooth Sliding Marquee (>= md) */}
+        <div className="hidden md:block bg-[#111111] border border-[#202020] p-5 rounded-xl shadow-xl overflow-hidden relative">
+          <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-[#111111] to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-[#111111] to-transparent z-10 pointer-events-none" />
+
+          <motion.div
+            className="flex items-center gap-4 w-max"
             animate={isPageVisible ? { x: ["0%", "-50%"] } : undefined}
             transition={{
               ease: "linear",
@@ -242,7 +302,7 @@ export default function ApproachAndToolsSection() {
               return (
                 <div
                   key={`${tool.name}-${idx}`}
-                  className="w-12 h-12 sm:w-14 sm:h-14 aspect-square bg-[#161616] border border-[#242424] hover:border-[#568f5e]/60 rounded-xl flex items-center justify-center p-2.5 shrink-0 hover:scale-110 transition-transform duration-200 shadow-sm cursor-pointer"
+                  className="w-14 h-14 aspect-square bg-[#161616] border border-[#242424] hover:border-[#568f5e]/60 rounded-xl flex items-center justify-center p-2.5 shrink-0 hover:scale-110 transition-transform duration-200 shadow-sm cursor-pointer"
                   title={tool.name}
                 >
                   <Icon />

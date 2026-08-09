@@ -31,7 +31,7 @@ export default function SidebarNav({ activeSection }: SidebarNavProps) {
   return (
     <>
       {/* Mobile Top Sticky Bar */}
-      <header className="md:hidden fixed top-0 left-0 right-0 z-50 bg-[#0d0d0d]/95 backdrop-blur-md border-b border-[#222222] px-6 py-4 flex items-center justify-between">
+      <header className="md:hidden fixed top-0 left-0 right-0 z-50 bg-[#0d0d0d]/95 backdrop-blur-md border-b border-[#222222] px-5 py-3.5 flex items-center justify-between">
         <button
           onClick={() => scrollToSection("home")}
           className="text-2xl font-bold font-bebas tracking-widest text-white flex items-center gap-0.5"
