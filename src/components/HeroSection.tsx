@@ -2,11 +2,20 @@
 
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 export default function HeroSection() {
+  const { scrollY } = useScroll();
+
+  // As user scrolls from 0px to 450px:
+  // 1. Grayscale smoothly increases from 0% (full color) to 100% (black and white)
+  const filter = useTransform(scrollY, [0, 450], ["grayscale(0%)", "grayscale(100%)"]);
+
+  // 2. Opacity smoothly decreases from 1 (fully visible) to 0 (completely faded)
+  const opacity = useTransform(scrollY, [0, 650], [1, 0]);
+
   const scrollToWork = () => {
-    const workElem = document.getElementById("work");
+    const workElem = document.getElementById("experience");
     if (workElem) {
       workElem.scrollIntoView({ behavior: "smooth" });
     }
@@ -14,21 +23,24 @@ export default function HeroSection() {
 
   return (
     <section id="home" className="relative w-full h-screen min-h-[680px] overflow-hidden bg-[#e6e2d9]">
-      {/* Background Photograph - Spans full hero height, aligned to right */}
-      <div className="absolute inset-0 w-full h-full z-0">
+      {/* Background Photograph - Fixed to viewport so it stays in place while scrolling, smoothly turns grayscale & fades opacity */}
+      <motion.div
+        style={{ filter, opacity }}
+        className="fixed top-0 right-0 w-full md:w-[calc(100%-15rem)] lg:w-[calc(100%-16rem)] h-screen z-0 pointer-events-none"
+      >
         <Image
-          src="/images/hero-desk.png"
+          src="/images/84c0cdca-1d5e-4613-b846-504afd8f5221.webp"
           alt="Hasinthaka Workspace"
           fill
           priority
           className="object-cover object-right lg:object-[right_center]"
         />
-        {/* Soft subtle gradient overlay on far left for small screens to ensure text readability */}
+        {/* Soft subtle gradient overlay on far left for small screens */}
         <div className="absolute inset-0 bg-gradient-to-r from-[#e6e2d9] via-[#e6e2d9]/90 sm:via-[#e6e2d9]/60 to-transparent lg:hidden pointer-events-none" />
-      </div>
+      </motion.div>
 
       {/* Hero Content - Overlaid on the Left Wall */}
-      <div className="relative z-10 h-full max-w-[1440px] mx-auto px-8 sm:px-12 md:px-16 lg:px-20 flex flex-col justify-center">
+      <div className="relative z-10 h-full max-w-[1440px] mx-auto px-8 sm:px-12 md:px-16 lg:px-20 pb-20 flex flex-col justify-center">
         <div className="max-w-[560px] pt-8 md:pt-0">
           
           {/* Eyebrow */}
@@ -38,7 +50,7 @@ export default function HeroSection() {
             transition={{ duration: 0.4, delay: 0.1 }}
             className="text-xs sm:text-sm font-mono tracking-[0.2em] text-[#444444] font-semibold uppercase mb-5"
           >
-            SOFTWARE ENGINEER
+            SOFTWARE ENGINEER & RESEARCHER
           </motion.div>
 
           {/* Headline */}
@@ -46,11 +58,11 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="font-bebas text-5xl sm:text-6xl md:text-7xl lg:text-[84px] leading-[0.88] text-[#171717] tracking-tight uppercase mb-5"
+            className="font-bebas text-4xl sm:text-5xl md:text-6xl lg:text-[78px] leading-[0.88] text-[#171717] tracking-tight uppercase mb-5"
           >
             I TURN COMPLEX<br />
             PROBLEMS INTO<br />
-            SIMPLE <span className="text-[#4b7a52]">SOLUTIONS.</span>
+            SIMPLE <span className="text-[#568f5e]">SOLUTIONS.</span>
           </motion.h1>
 
           {/* Description */}
@@ -58,7 +70,7 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.4 }}
-            className="font-mono text-xs sm:text-sm text-[#333333] leading-relaxed max-w-[420px] mb-8 space-y-1 font-medium"
+            className="font-mono text-xs sm:text-sm text-[#333333] leading-relaxed max-w-[450px] mb-8 space-y-1 font-medium"
           >
             <p>I build systems, tools and intelligent applications that create real impact.</p>
             <p className="text-[#555555]">Currently open to meaningful opportunities.</p>
@@ -72,16 +84,24 @@ export default function HeroSection() {
           >
             <button
               onClick={scrollToWork}
-              className="group inline-flex items-center gap-2.5 text-xs sm:text-sm font-mono font-semibold text-[#171717] hover:text-[#4b7a52] uppercase tracking-widest transition-colors py-1"
+              className="group inline-flex items-center gap-2.5 text-xs sm:text-sm font-mono font-semibold text-[#171717] hover:text-[#568f5e] uppercase tracking-widest transition-colors py-1"
             >
-              <span className="border-b border-[#171717] group-hover:border-[#4b7a52] pb-0.5 transition-colors">
+              <span className="border-b border-[#171717] group-hover:border-[#568f5e] pb-0.5 transition-colors">
                 VIEW MY WORK
               </span>
-              <ArrowRight size={14} className="group-hover:translate-x-1.5 transition-transform duration-200 text-[#171717] group-hover:text-[#4b7a52]" />
+              <ArrowRight size={14} className="group-hover:translate-x-1.5 transition-transform duration-200 text-[#171717] group-hover:text-[#568f5e]" />
             </button>
           </motion.div>
 
         </div>
+      </div>
+
+      {/* Status Pill Badge - Bottom Right Desk overlay */}
+      <div className="absolute bottom-8 right-8 z-20 hidden md:flex items-center gap-2.5 bg-[#121212]/90 backdrop-blur-md border border-[#2a2a2a] px-4 py-2 rounded-md shadow-2xl">
+        <span className="text-[11px] font-mono tracking-widest text-gray-300 font-semibold uppercase">
+          STATUS: Building
+        </span>
+        <span className="w-2 h-2 rounded-full bg-[#568f5e] animate-pulse" />
       </div>
     </section>
   );

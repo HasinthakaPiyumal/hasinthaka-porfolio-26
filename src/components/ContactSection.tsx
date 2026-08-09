@@ -1,7 +1,6 @@
 "use client";
 
-import { Mail, Phone, MapPin, ArrowRight } from "lucide-react";
-import { motion } from "framer-motion";
+import { Mail, Phone, MapPin, ArrowRight, Send } from "lucide-react";
 
 function GithubIcon({ className = "w-5 h-5" }: { className?: string }) {
   return (
@@ -19,136 +18,122 @@ function LinkedinIcon({ className = "w-5 h-5" }: { className?: string }) {
   );
 }
 
-function TwitterIcon({ className = "w-5 h-5" }: { className?: string }) {
-  return (
-    <svg className={className} fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-    </svg>
-  );
-}
-
 export default function ContactSection() {
   return (
-    <section id="contact" className="pt-24 pb-16 border-t border-[#1e1e1e]">
+    <section id="contact" className="pt-20 pb-12 border-t border-[#1e1e1e]">
       
       {/* Header */}
-      <h2 className="text-sm font-mono tracking-widest text-gray-400 uppercase flex items-center gap-2.5 mb-12">
-        <span className="text-[#4d7a54] font-bold">06 /</span>
+      <h2 className="text-xs sm:text-sm font-mono tracking-widest text-gray-400 uppercase flex items-center gap-2.5 mb-8">
+        <span className="text-[#568f5e] font-bold">08 /</span>
         <span className="text-white font-semibold">LET&apos;S CONNECT</span>
       </h2>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-14 lg:gap-16 mb-24">
-        
-        {/* Left Column - Large Headline */}
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="lg:col-span-7 flex flex-col justify-center"
-        >
-          <h3 className="font-bebas text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[0.9] tracking-wider text-white uppercase">
-            INTERESTING PROJECT OR JUST WANT TO SAY HELLO?{" "}
-            <span className="text-[#4d7a54]">I&apos;D LOVE TO HEAR FROM YOU.</span>
-          </h3>
-        </motion.div>
+      {/* Main Unified Box Container */}
+      <div className="bg-[#111111] border border-[#202020] rounded-xl p-6 sm:p-10 shadow-2xl space-y-8 mb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          
+          {/* Left Column: Comfortable Headline & Call to Action (7 cols) */}
+          <div className="lg:col-span-7 space-y-5">
+            <h3 className="text-2xl sm:text-3xl lg:text-4xl font-mono font-bold text-white tracking-tight leading-tight">
+              Have an interesting project or just want to connect?{" "}
+              <span className="text-[#568f5e] block sm:inline">I&apos;d love to hear from you.</span>
+            </h3>
 
-        {/* Right Column - Contact Info & CTA Button */}
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="lg:col-span-5 space-y-10 flex flex-col justify-center"
-        >
-          {/* Contact Details List */}
-          <div className="space-y-4 text-sm sm:text-base font-mono text-gray-300">
-            <div className="flex items-center gap-3.5">
-              <Mail size={18} className="text-[#4d7a54]" />
-              <a href="mailto:hasinthaka@example.com" className="hover:text-white transition-colors">
-                hasinthaka@example.com
-              </a>
-            </div>
+            <p className="text-xs sm:text-sm font-mono text-gray-400 leading-relaxed max-w-xl">
+              Whether you need backend microservices, applied AI solutions, or full-stack web and mobile development, my inbox is always open.
+            </p>
 
-            <div className="flex items-center gap-3.5">
-              <Phone size={18} className="text-[#4d7a54]" />
-              <a href="tel:+94712345678" className="hover:text-white transition-colors">
-                +94 71 234 5678
-              </a>
-            </div>
-
-            <div className="flex items-center gap-3.5">
-              <MapPin size={18} className="text-[#4d7a54]" />
-              <span>Sri Lanka</span>
-            </div>
-          </div>
-
-          {/* Primary CTA Button */}
-          <div>
-            <a
-              href="mailto:hasinthaka@example.com"
-              className="group inline-flex items-center gap-3.5 bg-[#161616] hover:bg-[#4d7a54] text-white hover:text-white border border-[#2a2a2a] hover:border-[#4d7a54] px-8 py-4 rounded-lg font-mono text-xs sm:text-sm font-bold uppercase tracking-widest transition-all duration-300 shadow-xl"
-            >
-              <span>Send me a message</span>
-              <ArrowRight size={16} className="group-hover:translate-x-2 transition-transform duration-200" />
-            </a>
-          </div>
-
-          {/* Social Links */}
-          <div className="pt-6 border-t border-[#222222] space-y-4">
-            <div className="text-xs font-mono font-semibold text-gray-500 uppercase tracking-widest">
-              FIND ME ONLINE
-            </div>
-            <div className="flex items-center gap-4 text-gray-300">
+            <div className="pt-2">
               <a
-                href="https://github.com/HasinthakaPiyumal"
-                target="_blank"
-                rel="noreferrer"
-                className="hover:text-[#4d7a54] transition-colors p-3 bg-[#161616] border border-[#262626] hover:border-[#383838] rounded-lg shadow-sm"
-                aria-label="GitHub"
+                href="mailto:hasinthakapiyumal@gmail.com"
+                className="inline-flex items-center gap-2.5 px-5 py-3 rounded-lg bg-[#568f5e] hover:bg-[#487a4f] text-white font-mono text-xs font-semibold transition-all shadow-lg hover:shadow-[#568f5e]/20 group"
               >
-                <GithubIcon className="w-5 h-5" />
-              </a>
-              <a
-                href="https://linkedin.com"
-                target="_blank"
-                rel="noreferrer"
-                className="hover:text-[#4d7a54] transition-colors p-3 bg-[#161616] border border-[#262626] hover:border-[#383838] rounded-lg shadow-sm"
-                aria-label="LinkedIn"
-              >
-                <LinkedinIcon className="w-5 h-5" />
-              </a>
-              <a
-                href="https://twitter.com"
-                target="_blank"
-                rel="noreferrer"
-                className="hover:text-[#4d7a54] transition-colors p-3 bg-[#161616] border border-[#262626] hover:border-[#383838] rounded-lg shadow-sm"
-                aria-label="Twitter"
-              >
-                <TwitterIcon className="w-5 h-5" />
-              </a>
-              <a
-                href="mailto:hasinthaka@example.com"
-                className="hover:text-[#4d7a54] transition-colors p-3 bg-[#161616] border border-[#262626] hover:border-[#383838] rounded-lg shadow-sm"
-                aria-label="Email"
-              >
-                <Mail size={20} />
+                <Send size={15} />
+                <span>Send a Message</span>
+                <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
               </a>
             </div>
           </div>
 
-        </motion.div>
+          {/* Right Column: Contact Details Cards & Socials (5 cols) */}
+          <div className="lg:col-span-5 space-y-4 bg-[#161616] border border-[#242424] p-5 sm:p-6 rounded-xl shadow-inner">
+            <div className="space-y-3 text-xs font-mono text-gray-300">
+              <a
+                href="mailto:hasinthakapiyumal@gmail.com"
+                className="flex items-center gap-3.5 p-3 rounded-lg bg-[#111111] border border-[#222222] hover:border-[#568f5e]/50 transition-colors group"
+              >
+                <div className="w-8 h-8 rounded-md bg-[#1d1d1d] flex items-center justify-center text-[#568f5e] group-hover:bg-[#568f5e] group-hover:text-white transition-colors shrink-0">
+                  <Mail size={16} />
+                </div>
+                <div className="flex-1 truncate">
+                  <div className="text-[10px] text-gray-500 uppercase tracking-wider">Email</div>
+                  <div className="text-gray-200 group-hover:text-white truncate">hasinthakapiyumal@gmail.com</div>
+                </div>
+              </a>
 
+              <a
+                href="tel:+94763215389"
+                className="flex items-center gap-3.5 p-3 rounded-lg bg-[#111111] border border-[#222222] hover:border-[#568f5e]/50 transition-colors group"
+              >
+                <div className="w-8 h-8 rounded-md bg-[#1d1d1d] flex items-center justify-center text-[#568f5e] group-hover:bg-[#568f5e] group-hover:text-white transition-colors shrink-0">
+                  <Phone size={16} />
+                </div>
+                <div className="flex-1">
+                  <div className="text-[10px] text-gray-500 uppercase tracking-wider">Phone</div>
+                  <div className="text-gray-200 group-hover:text-white">+94 76 321 5389</div>
+                </div>
+              </a>
+
+              <div className="flex items-center gap-3.5 p-3 rounded-lg bg-[#111111] border border-[#222222]">
+                <div className="w-8 h-8 rounded-md bg-[#1d1d1d] flex items-center justify-center text-[#568f5e] shrink-0">
+                  <MapPin size={16} />
+                </div>
+                <div className="flex-1">
+                  <div className="text-[10px] text-gray-500 uppercase tracking-wider">Location</div>
+                  <div className="text-gray-200">Colombo, Sri Lanka</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Social Links Bar */}
+            <div className="pt-3 border-t border-[#222222] space-y-2.5">
+              <div className="text-[10px] font-mono font-semibold text-gray-400 uppercase tracking-widest">
+                FIND ME ONLINE
+              </div>
+              <div className="flex items-center gap-2.5">
+                <a
+                  href="https://github.com/HasinthakaPiyumal"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex-1 flex items-center justify-center gap-2 py-2 px-3 bg-[#111111] border border-[#222222] hover:border-[#568f5e]/50 text-gray-300 hover:text-white rounded-md text-xs font-mono transition-colors"
+                >
+                  <GithubIcon className="w-4 h-4" />
+                  <span>GitHub</span>
+                </a>
+                <a
+                  href="https://linkedin.com/in/hasinthaka-piyumal"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex-1 flex items-center justify-center gap-2 py-2 px-3 bg-[#111111] border border-[#222222] hover:border-[#568f5e]/50 text-gray-300 hover:text-white rounded-md text-xs font-mono transition-colors"
+                >
+                  <LinkedinIcon className="w-4 h-4" />
+                  <span>LinkedIn</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </div>
 
       {/* Footer Line */}
-      <div className="border-t border-[#1e1e1e] pt-10 flex flex-col sm:flex-row items-center justify-between text-xs font-mono text-gray-500 gap-4">
+      <div className="border-t border-[#1e1e1e] pt-8 flex flex-col sm:flex-row items-center justify-between text-xs font-mono text-gray-500 gap-4">
         <div>
-          &copy; 2026 Hasinthaka.dev
+          &copy; 2026 Hasinthaka Piyumal
         </div>
         <div className="flex items-center gap-1.5">
           <span>Crafted with code and curiosity.</span>
-          <span className="text-[#4d7a54] font-bold">&lt;/&gt;</span>
+          <span className="text-[#568f5e] font-bold">&lt;/&gt;</span>
         </div>
       </div>
 

@@ -7,31 +7,31 @@ import { motion } from "framer-motion";
 const projects = [
   {
     num: "01",
-    title: "Zenlise",
-    description: "Android publishing infrastructure for developers and teams.",
-    tags: ["React", "Node.js", "PostgreSQL", "AWS"],
+    title: "Zenlise: Automated App Publishing",
+    description: "Microservices platform in Go & Python automating app deployment and store compliance checks with Redis task queues & Azure cloud.",
+    tags: ["Go", "Python", "Next.js", "Redis", "Docker", "Azure"],
     image: "/images/projects/zenlise.jpg",
   },
   {
     num: "02",
-    title: "HippoCortex",
-    description: "Continual learning research using Mamba-based architectures.",
-    tags: ["Python", "PyTorch", "Mamba", "CUDA"],
+    title: "Northstar Face Recognition System",
+    description: "Edge-based facial recognition entry system using Flutter & MobileFaceNet with real-time anti-spoofing and liveness detection algorithms.",
+    tags: ["Flutter", "TensorFlow Lite", "Python", "Edge AI"],
     image: "/images/projects/hippocortex.jpg",
   },
   {
     num: "03",
-    title: "DocuMind AI",
-    description: "AI-powered document assistant with semantic search & Q&A.",
-    tags: ["LangChain", "FastAPI", "ChromaDB"],
-    image: "/images/projects/documind.jpg",
+    title: "Fuel-Master Quota Management",
+    description: "3-tier monorepo system with Spring Boot backend, JWT RBAC, React admin dashboard, and Flutter mobile app with real-time field operations.",
+    tags: ["Java", "Spring Boot", "React", "Flutter", "PostgreSQL"],
+    image: "/images/projects/shopease.jpg",
   },
   {
     num: "04",
-    title: "ShopEase",
-    description: "Full-stack e-commerce platform with secure payments.",
-    tags: ["Next.js", "Node.js", "MongoDB", "Stripe"],
-    image: "/images/projects/shopease.jpg",
+    title: "Northstar Production Fitness Suite",
+    description: "Full-featured iOS & Android fitness management suite deployed to production stores with HealthKit/Google Fit telemetry sync.",
+    tags: ["Flutter", "Firebase", "REST APIs", "iOS/Android"],
+    image: "/images/projects/documind.jpg",
   },
 ];
 
@@ -42,7 +42,7 @@ export default function SelectedWorkSection() {
       {/* Section Header */}
       <div className="flex items-center justify-between mb-10">
         <h2 className="text-xs sm:text-sm font-mono tracking-widest text-gray-400 uppercase flex items-center gap-2.5">
-          <span className="text-[#568f5e] font-bold">02 /</span>
+          <span className="text-[#568f5e] font-bold">03 /</span>
           <span className="text-white font-semibold">SELECTED WORK</span>
         </h2>
 
@@ -55,85 +55,78 @@ export default function SelectedWorkSection() {
         </a>
       </div>
 
-      {/* Main Grid: Projects Container (7 cols) + Transparent How I Think Paper (5 cols) */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start relative">
+      {/* Main Grid: Projects Container (7 cols) + Sticky How I Think Paper (5 cols) */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start relative">
         
         {/* Left Column: ONE SINGLE UNIFIED CONTAINER BOX FOR ALL 4 PROJECTS */}
-        <div className="lg:col-span-7 bg-[#121212] border border-[#222222] rounded-xl overflow-hidden divide-y divide-[#222222] shadow-xl">
-          {projects.map((project, idx) => (
-            <motion.div
+        <div className="lg:col-span-7 bg-[#111111] border border-[#202020] rounded-xl overflow-hidden divide-y divide-[#202020] shadow-2xl">
+          {projects.map((project) => (
+            <div
               key={project.title}
-              initial={{ opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-30px" }}
-              transition={{ duration: 0.4, delay: idx * 0.08 }}
-              className="group p-6 sm:p-8 hover:bg-[#161616] transition-colors duration-300 flex flex-col md:flex-row items-start md:items-center gap-6"
+              className="group p-4 sm:p-5 hover:bg-[#151515] transition-colors duration-300 flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-5"
             >
-              {/* Left Timeline Indicator Column */}
-              <div className="flex flex-col items-center shrink-0 self-stretch pt-1">
-                <span className="text-sm font-mono font-bold text-[#568f5e]">
-                  {project.num}
-                </span>
-                <div className="w-[1px] flex-1 bg-[#262626] my-3 min-h-[40px] relative">
-                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-[#444444] group-hover:bg-[#568f5e] transition-colors" />
+              {/* Timeline Indicator + Text Information */}
+              <div className="flex items-start gap-3 sm:gap-4 flex-1 min-w-0">
+                {/* Left Timeline Indicator Column */}
+                <div className="flex flex-col items-center shrink-0 pt-0.5 self-stretch">
+                  <span className="text-xs font-mono font-bold text-[#568f5e]">
+                    {project.num}
+                  </span>
+                  <div className="w-[1px] flex-1 bg-[#242424] my-1.5 min-h-[32px] relative">
+                    <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-[#3a3a3a] group-hover:bg-[#568f5e] transition-colors" />
+                  </div>
+                </div>
+
+                {/* Text Information Column */}
+                <div className="flex-1 min-w-0 space-y-1.5">
+                  <h3 className="text-base sm:text-lg font-mono font-semibold text-white group-hover:text-[#568f5e] transition-colors tracking-tight">
+                    {project.title}
+                  </h3>
+
+                  <p className="text-xs font-mono text-gray-400 leading-relaxed">
+                    {project.description}
+                  </p>
+
+                  {/* Tech Tags */}
+                  <div className="flex flex-wrap gap-1 pt-0.5">
+                    {project.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="text-[10px] sm:text-[11px] font-mono text-gray-300 bg-[#181818] border border-[#262626] px-2 py-0.5 rounded transition-colors"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
 
-              {/* Text Information Column */}
-              <div className="flex-1 space-y-3">
-                <h3 className="text-xl sm:text-2xl font-mono font-semibold text-white group-hover:text-[#568f5e] transition-colors tracking-tight">
-                  {project.title}
-                </h3>
-
-                <p className="text-xs sm:text-sm font-mono text-gray-400 leading-relaxed">
-                  {project.description}
-                </p>
-
-                {/* Tech Tags */}
-                <div className="flex flex-wrap gap-2 pt-1">
-                  {project.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="text-[11px] font-mono text-gray-300 bg-[#1a1a1a] group-hover:bg-[#222222] border border-[#282828] px-2.5 py-0.5 rounded transition-colors"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              {/* Project Preview Thumbnail */}
-              <div className="w-full md:w-56 lg:w-64 aspect-[16/10] relative rounded-lg overflow-hidden border border-[#262626] bg-[#0a0a0a] shrink-0 shadow-md">
+              {/* Compact Row Image Thumbnail */}
+              <div className="w-full sm:w-36 md:w-44 lg:w-48 aspect-[16/10] relative rounded-lg overflow-hidden border border-[#242424] bg-[#0a0a0a] shrink-0 shadow-md">
                 <Image
                   src={project.image}
                   alt={project.title}
                   fill
-                  className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                  unoptimized
+                  className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
                 />
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
 
-        {/* Right Column: Sticky Transparent "HOW I THINK" Paper Notebook Pad */}
-        <div className="lg:col-span-5 lg:sticky lg:top-8 self-start flex justify-center">
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="relative w-full max-w-[440px]"
-          >
-            <div className="relative aspect-[3/4] w-full">
-              <Image
-                src="/images/how-i-think-transparent.png"
-                alt="How I Think Diagram Transparent Paper Notepad"
-                fill
-                priority
-                className="object-contain object-top drop-shadow-2xl"
-              />
-            </div>
-          </motion.div>
+        {/* Right Column: Sticky "HOW I THINK" Paper Notebook Pad filling the column width */}
+        <div className="lg:col-span-5 lg:sticky lg:top-16 h-fit flex items-center justify-center w-full">
+          <div className="relative w-full aspect-[4/5] min-h-[480px] sm:min-h-[540px] flex items-center justify-center">
+            <Image
+              src="/images/how-i-think-transparent.png"
+              alt="How I Think Diagram Transparent Paper Notepad"
+              fill
+              priority
+              unoptimized
+              className="object-contain w-full object-center drop-shadow-2xl hover:scale-105 transition-transform duration-500 scale-105 sm:scale-110 lg:scale-120"
+            />
+          </div>
         </div>
 
       </div>
