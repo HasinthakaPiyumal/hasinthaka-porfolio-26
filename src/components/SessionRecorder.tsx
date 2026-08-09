@@ -21,7 +21,7 @@ export function SessionRecorder() {
           events: eventsToSend,
           durationSeconds: duration,
         }),
-      }).catch((err) => console.warn("Session flush error:", err));
+      }).catch(() => {});
     }
   };
 
@@ -44,6 +44,11 @@ export function SessionRecorder() {
           },
           maskInputOptions: { password: true },
           checkoutEveryNms: 30000,
+          sampling: {
+            mousemove: 100, // Sample cursor moves every 100ms (Reduces size by 70%)
+            scroll: 150, // Sample scroll events every 150ms
+            input: "last",
+          },
         });
 
         // Flush initial snapshot quickly after 1.5 seconds so player gets DOM tree

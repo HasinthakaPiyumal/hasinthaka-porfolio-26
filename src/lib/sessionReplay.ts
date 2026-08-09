@@ -62,6 +62,13 @@ export async function saveSessionData(sessionId: string, data: Partial<SessionDa
       existingData.durationSeconds = Math.max(existingData.durationSeconds, data.durationSeconds);
     }
 
+    // Cap events to max 800 per session (~200KB max per session payload)
+    if (existingData.events.length > 800) {
+      const firstSnapshot = existingData.events.slice(0, 2);
+      const recentEvents = existingData.events.slice(-798);
+      existingData.events = [...firstSnapshot, ...recentEvents];
+    }
+
     // Save to Cloud Redis (persists across Vercel deployments with 24h TTL)
     if (redis) {
       try {

@@ -63,7 +63,7 @@ export default function HeroSection() {
         />
         {/* Mobile Background Image */}
         <Image
-          src="/images/hero-mobile.webp"
+          src="/images/hero-mobile-final.webp"
           alt="Hasinthaka Workspace Mobile"
           fill
           priority
