@@ -1,6 +1,7 @@
-"use client";
-
-import { Mail, Phone, MapPin, ArrowRight, Send } from "lucide-react";
+import { useState } from "react";
+import { Mail, Phone, MapPin, ArrowRight, Send, Check } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import SpotlightCard from "./SpotlightCard";
 
 function GithubIcon({ className = "w-5 h-5" }: { className?: string }) {
   return (
@@ -19,6 +20,13 @@ function LinkedinIcon({ className = "w-5 h-5" }: { className?: string }) {
 }
 
 export default function ContactSection() {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText("hasinthakapiyumal@gmail.com");
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
   return (
     <section id="contact" className="pt-10 pb-8 md:pt-20 md:pb-12 border-t border-[#1e1e1e]">
       
@@ -29,7 +37,7 @@ export default function ContactSection() {
       </h2>
 
       {/* Main Unified Box Container */}
-      <div className="bg-[#111111] border border-[#202020] rounded-xl p-3.5 sm:p-10 shadow-2xl space-y-5 sm:space-y-8 mb-6 sm:mb-16">
+      <SpotlightCard className="bg-[#111111] border border-[#202020] rounded-xl p-3.5 sm:p-10 shadow-2xl space-y-5 sm:space-y-8 mb-6 sm:mb-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-12 items-center">
           
           {/* Left Column: Comfortable Headline & Call to Action (7 cols) */}
@@ -44,32 +52,47 @@ export default function ContactSection() {
             </p>
 
             <div className="pt-1 sm:pt-2">
-              <a
+              <motion.a
+                whileTap={{ scale: 0.97 }}
                 href="whatsapp://send?phone=94763215389&text=Hello%20Hasinthaka,%20I'd%20like%20to%20connect%20with%20you!"
-                className="inline-flex items-center gap-2 px-4 py-2.5 sm:px-5 sm:py-3 rounded-lg bg-[#568f5e] hover:bg-[#487a4f] text-white font-mono text-xs font-semibold transition-all shadow-lg hover:shadow-[#568f5e]/20 group"
+                className="inline-flex items-center gap-2 px-4 py-2.5 sm:px-5 sm:py-3 rounded-lg bg-[#568f5e] hover:bg-[#487a4f] text-white font-mono text-xs font-semibold transition-all shadow-lg hover:shadow-[#568f5e]/20 group cursor-pointer"
               >
                 <Send size={14} />
                 <span>Send a Message</span>
                 <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform" />
-              </a>
+              </motion.a>
             </div>
           </div>
 
           {/* Right Column: Contact Details Cards & Socials (5 cols) */}
           <div className="lg:col-span-5 space-y-3 bg-[#161616] border border-[#242424] p-3.5 sm:p-6 rounded-xl shadow-inner">
             <div className="space-y-2 text-xs font-mono text-gray-300">
-              <a
-                href="mailto:hasinthakapiyumal@gmail.com"
-                className="flex items-center gap-3 p-2.5 sm:p-3 rounded-lg bg-[#111111] border border-[#222222] hover:border-[#568f5e]/50 transition-colors group"
+              <div
+                onClick={handleCopyEmail}
+                className="relative flex items-center gap-3 p-2.5 sm:p-3 rounded-lg bg-[#111111] border border-[#222222] hover:border-[#568f5e]/50 transition-colors group cursor-pointer"
               >
                 <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-md bg-[#1d1d1d] flex items-center justify-center text-[#568f5e] group-hover:bg-[#568f5e] group-hover:text-white transition-colors shrink-0">
                   <Mail size={15} />
                 </div>
                 <div className="flex-1 truncate">
-                  <div className="text-[9px] sm:text-[10px] text-gray-500 uppercase tracking-wider">Email</div>
+                  <div className="text-[9px] sm:text-[10px] text-gray-500 uppercase tracking-wider flex items-center justify-between">
+                    <span>Email (Click to copy)</span>
+                    <AnimatePresence>
+                      {copied && (
+                        <motion.span
+                          initial={{ opacity: 0, y: 3 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -3 }}
+                          className="text-[#568f5e] font-bold flex items-center gap-1 text-[9px]"
+                        >
+                          <Check size={10} /> Copied!
+                        </motion.span>
+                      )}
+                    </AnimatePresence>
+                  </div>
                   <div className="text-gray-200 group-hover:text-white text-xs truncate">hasinthakapiyumal@gmail.com</div>
                 </div>
-              </a>
+              </div>
 
               <a
                 href="tel:+94763215389"
@@ -124,7 +147,7 @@ export default function ContactSection() {
           </div>
 
         </div>
-      </div>
+      </SpotlightCard>
 
       {/* Footer Line */}
       <div className="border-t border-[#1e1e1e] pt-8 flex flex-col sm:flex-row items-center justify-between text-xs font-mono text-gray-500 gap-4">

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
+import { motion } from "framer-motion";
 
 interface SidebarNavProps {
   activeSection: string;
@@ -58,13 +59,19 @@ export default function SidebarNav({ activeSection }: SidebarNavProps) {
                 <button
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
-                  className={`flex items-center gap-5 text-xl font-mono text-left transition-colors duration-200 ${
+                  className={`relative flex items-center gap-5 text-xl font-mono text-left transition-colors duration-200 ${
                     isActive ? "text-[#568f5e] font-semibold" : "text-gray-400 hover:text-white"
                   }`}
                 >
                   <span className="text-xs font-mono text-gray-500">{item.num}</span>
                   <span>{item.label}</span>
-                  {isActive && <span className="w-2 h-2 rounded-full bg-[#568f5e] ml-auto shadow-[0_0_8px_#568f5e]" />}
+                  {isActive && (
+                    <motion.span
+                      layoutId="mobileNavActiveDot"
+                      className="w-2 h-2 rounded-full bg-[#568f5e] ml-auto shadow-[0_0_8px_#568f5e]"
+                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                    />
+                  )}
                 </button>
               );
             })}
@@ -94,14 +101,14 @@ export default function SidebarNav({ activeSection }: SidebarNavProps) {
           </div>
 
           {/* Navigation Links */}
-          <nav className="flex flex-col gap-5">
+          <nav className="flex flex-col gap-5 relative">
             {navItems.map((item) => {
               const isActive = activeSection === item.id;
               return (
                 <button
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
-                  className={`group flex items-center gap-4 text-sm font-mono text-left transition-all duration-200 ${
+                  className={`group relative flex items-center gap-4 text-sm font-mono text-left transition-all duration-200 py-0.5 ${
                     isActive ? "text-[#568f5e] font-semibold" : "text-gray-400 hover:text-white"
                   }`}
                 >
@@ -109,8 +116,21 @@ export default function SidebarNav({ activeSection }: SidebarNavProps) {
                     {item.num}
                   </span>
                   <span className="tracking-wide">{item.label}</span>
+                  
                   {isActive && (
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#568f5e] ml-auto shadow-[0_0_6px_#568f5e]" />
+                    <>
+                      <motion.span
+                        layoutId="desktopNavDot"
+                        className="w-1.5 h-1.5 rounded-full bg-[#568f5e] ml-auto shadow-[0_0_6px_#568f5e]"
+                        transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                      />
+                      {/* Razor-thin right edge active bar */}
+                      <motion.span
+                        layoutId="desktopNavActiveIndicator"
+                        className="absolute -right-7 lg:-right-8 top-0 bottom-0 w-[2px] bg-[#568f5e] shadow-[0_0_10px_#568f5e]"
+                        transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                      />
+                    </>
                   )}
                 </button>
               );

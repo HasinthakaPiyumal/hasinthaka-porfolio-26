@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { Calendar } from "lucide-react";
+import SpotlightCard from "./SpotlightCard";
 
 const experiences = [
   {
@@ -42,7 +43,7 @@ export default function ExperienceSection() {
       </div>
 
       {/* Experience List Container */}
-      <div className="bg-[#111111] border border-[#202020] rounded-xl overflow-hidden divide-y divide-[#202020] shadow-2xl">
+      <SpotlightCard className="bg-[#111111] border border-[#202020] rounded-xl overflow-hidden divide-y divide-[#202020] shadow-2xl">
         {experiences.map((exp) => (
           <div
             key={`${exp.company}-${exp.role}`}
@@ -127,7 +128,7 @@ export default function ExperienceSection() {
             </div>
           </div>
         ))}
-      </div>
+      </SpotlightCard>
     </section>
   );
 }

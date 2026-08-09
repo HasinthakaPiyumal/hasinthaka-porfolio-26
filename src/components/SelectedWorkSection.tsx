@@ -1,9 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import { ArrowUpRight, X, ChevronLeft, ChevronRight, CheckCircle } from "lucide-react";
 import AISparkleIcon from "./icons/AISparkleIcon";
+import SpotlightCard from "./SpotlightCard";
+import ProjectArchiveModal from "./ProjectArchiveModal";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface Project {
@@ -170,7 +173,7 @@ function ModalSlideshow({ images, title }: { images: string[]; title: string }) 
 
   return (
     <div
-      className="relative w-full h-[40vh] sm:h-[55vh] bg-[#0a0a0a] border-b border-[#222222] overflow-hidden group/modal-slide"
+      className="relative w-full h-full min-h-[300px] bg-[#080808] overflow-hidden group/modal-slide flex items-center justify-center"
       onMouseEnter={() => setIsAutoPlaying(false)}
       onMouseLeave={() => setIsAutoPlaying(true)}
     >
@@ -181,7 +184,7 @@ function ModalSlideshow({ images, title }: { images: string[]; title: string }) 
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.98 }}
           transition={{ duration: 0.5 }}
-          className="absolute inset-0"
+          className="absolute inset-0 p-4 sm:p-8 flex items-center justify-center"
         >
           <Image
             src={images[currentIndex]}
@@ -198,24 +201,24 @@ function ModalSlideshow({ images, title }: { images: string[]; title: string }) 
         <>
           <button
             onClick={handlePrev}
-            className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/60 border border-white/10 hover:border-[#568f5e] text-white flex items-center justify-center backdrop-blur-md transition-all hover:scale-110 z-10"
+            className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/70 border border-white/15 hover:border-[#568f5e] text-white flex items-center justify-center backdrop-blur-md transition-all hover:scale-110 z-10 cursor-pointer"
             aria-label="Previous image"
           >
-            <ChevronLeft size={20} />
+            <ChevronLeft size={22} />
           </button>
 
           <button
             onClick={handleNext}
-            className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/60 border border-white/10 hover:border-[#568f5e] text-white flex items-center justify-center backdrop-blur-md transition-all hover:scale-110 z-10"
+            className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/70 border border-white/15 hover:border-[#568f5e] text-white flex items-center justify-center backdrop-blur-md transition-all hover:scale-110 z-10 cursor-pointer"
             aria-label="Next image"
           >
-            <ChevronRight size={20} />
+            <ChevronRight size={22} />
           </button>
         </>
       )}
 
       {/* Bottom Control Bar on Modal Slideshow */}
-      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-2 z-10 bg-black/70 backdrop-blur-md px-3 py-1 rounded-full border border-white/10">
+      <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex items-center gap-2 z-10 bg-black/80 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/15 shadow-xl">
         {images.map((_, idx) => (
           <button
             key={idx}
@@ -224,11 +227,11 @@ function ModalSlideshow({ images, title }: { images: string[]; title: string }) 
               setCurrentIndex(idx);
             }}
             className={`h-1.5 rounded-full transition-all duration-300 ${
-              idx === currentIndex ? "w-5 bg-[#568f5e]" : "w-1.5 bg-white/40 hover:bg-white/70"
+              idx === currentIndex ? "w-6 bg-[#568f5e]" : "w-1.5 bg-white/40 hover:bg-white/70"
             }`}
           />
         ))}
-        <span className="text-[10px] font-mono text-gray-300 ml-1">
+        <span className="text-[11px] font-mono text-gray-300 ml-1.5">
           {currentIndex + 1}/{images.length}
         </span>
       </div>
@@ -238,118 +241,118 @@ function ModalSlideshow({ images, title }: { images: string[]; title: string }) 
 
 export default function SelectedWorkSection() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [isArchiveOpen, setIsArchiveOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
-  return (
-    <section id="work" className="py-10 md:py-24 border-t border-[#1e1e1e] relative">
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
-      {/* Project Details Modal */}
-      <AnimatePresence>
-        {selectedProject && (
+  const modalContent = (
+    <AnimatePresence>
+      {selectedProject && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          onClick={() => setSelectedProject(null)}
+          className="fixed inset-0 z-[9999] bg-black/95 backdrop-blur-2xl flex items-center justify-center cursor-zoom-out p-0"
+        >
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setSelectedProject(null)}
-            className="fixed inset-0 z-50 bg-black/90 backdrop-blur-xl flex items-center justify-center p-3 sm:p-6 overflow-y-auto cursor-zoom-out"
+            initial={{ scale: 0.98, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.98, opacity: 0 }}
+            transition={{ type: "spring", damping: 28, stiffness: 300 }}
+            className="relative w-full h-full bg-[#0d0d0d] flex flex-col lg:flex-row cursor-default overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
           >
-            <motion.div
-              initial={{ scale: 0.93, opacity: 0, y: 15 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.93, opacity: 0, y: 15 }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="relative max-w-3xl w-full rounded-2xl overflow-hidden border border-[#282828] shadow-[0_25px_60px_rgba(0,0,0,0.9)] bg-[#111111] my-auto cursor-default flex flex-col max-h-[90vh]"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Modal Header */}
-              <div className="flex items-center justify-between p-4 sm:p-5 border-b border-[#202020] bg-[#141414]">
-                <div className="flex items-center gap-2.5 min-w-0">
-                  <span className="text-xs font-mono font-bold text-[#568f5e] px-2 py-0.5 rounded bg-[#1c1c1c] border border-[#262626]">
+            {/* Left Side: Large Full-Height Image Slideshow */}
+            <div className="w-full lg:w-[65%] xl:w-[70%] h-[45vh] lg:h-full relative bg-[#080808] border-b lg:border-b-0 lg:border-r border-[#1f1f1f] flex items-center justify-center overflow-hidden">
+              <ModalSlideshow images={selectedProject.images} title={selectedProject.title} />
+            </div>
+
+            {/* Right Side: Project Information & Details Panel */}
+            <div className="w-full lg:w-[35%] xl:w-[30%] h-[55vh] lg:h-full flex flex-col justify-between bg-[#111111] overflow-hidden">
+              
+              {/* Panel Top Header Bar */}
+              <div className="p-4 sm:p-6 border-b border-[#202020] bg-[#141414] flex items-center justify-between gap-3 shrink-0">
+                <div className="flex items-center gap-3 min-w-0 flex-1">
+                  <span className="text-xs font-mono font-bold text-[#568f5e] px-2.5 py-1 rounded bg-[#1c1c1c] border border-[#262626] shrink-0">
                     {selectedProject.num}
                   </span>
-                  <h3 className="text-base sm:text-lg font-mono font-semibold text-white truncate">
+                  <h3 className="text-sm sm:text-base md:text-lg font-mono font-bold text-white leading-tight">
                     {selectedProject.title}
                   </h3>
                 </div>
 
                 <button
                   onClick={() => setSelectedProject(null)}
-                  className="text-gray-400 hover:text-white p-1.5 rounded-full bg-[#1c1c1c] border border-[#282828] transition-colors shrink-0"
+                  className="text-gray-400 hover:text-white p-2 rounded-full bg-[#1c1c1c] border border-[#282828] hover:border-[#568f5e]/60 transition-all shrink-0 cursor-pointer"
                   aria-label="Close details"
                 >
                   <X size={18} />
                 </button>
               </div>
 
-              {/* Modal Body (Scrollable) */}
-              <div className="overflow-y-auto flex-1 custom-scrollbar">
-                {/* Interactive Slideshow */}
-                <ModalSlideshow images={selectedProject.images} title={selectedProject.title} />
+              {/* Panel Content (Scrollable) */}
+              <div className="p-5 sm:p-8 flex-1 overflow-y-auto space-y-6 custom-scrollbar">
+                {/* Overview */}
+                <div className="space-y-3">
+                  <h4 className="text-xs font-mono font-semibold text-gray-400 uppercase tracking-widest flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#568f5e]" />
+                    Project Overview
+                  </h4>
+                  <p className="text-xs sm:text-sm font-mono text-gray-300 leading-relaxed font-normal">
+                    {selectedProject.fullDescription}
+                  </p>
+                </div>
 
-                {/* Details Content */}
-                <div className="p-4 sm:p-7 space-y-5">
-                  {/* Overview */}
-                  <div className="space-y-2">
-                    <h4 className="text-xs font-mono font-semibold text-gray-400 uppercase tracking-widest flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#568f5e]" />
-                      Project Overview
-                    </h4>
-                    <p className="text-xs sm:text-sm font-mono text-gray-300 leading-relaxed">
-                      {selectedProject.fullDescription}
-                    </p>
-                  </div>
-
-                  {/* Key Technical Highlights */}
-                  <div className="space-y-2.5">
-                    <h4 className="text-xs font-mono font-semibold text-gray-400 uppercase tracking-widest flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#568f5e]" />
-                      Key Architectural Highlights
-                    </h4>
-                    <ul className="space-y-2 text-xs font-mono text-gray-300">
-                      {selectedProject.highlights.map((item, idx) => (
-                        <li key={idx} className="flex items-start gap-2 bg-[#161616] p-2.5 rounded-lg border border-[#222222]">
-                          <CheckCircle size={14} className="text-[#568f5e] shrink-0 mt-0.5" />
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* Tech Stack */}
-                  <div className="space-y-2 pt-2 border-t border-[#202020]">
-                    <h4 className="text-xs font-mono font-semibold text-gray-400 uppercase tracking-widest">
-                      Technologies & Tools
-                    </h4>
-                    <div className="flex flex-wrap gap-1.5">
-                      {selectedProject.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="text-xs font-mono text-gray-200 bg-[#181818] border border-[#262626] px-2.5 py-1 rounded"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
+                {/* Tech Stack */}
+                <div className="space-y-3 pt-4 border-t border-[#202020]">
+                  <h4 className="text-xs font-mono font-semibold text-gray-400 uppercase tracking-widest flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#568f5e]" />
+                    Technologies & Tools
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {selectedProject.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="text-xs font-mono text-gray-200 bg-[#181818] border border-[#262626] px-3 py-1 rounded-md"
+                      >
+                        {tag}
+                      </span>
+                    ))}
                   </div>
                 </div>
               </div>
 
-              {/* Modal Footer */}
-              <div className="p-4 border-t border-[#202020] bg-[#141414] flex items-center justify-between">
-                <span className="text-[11px] font-mono text-gray-400 flex items-center gap-1.5">
-                  <AISparkleIcon size={13} className="text-[#568f5e]" />
-                  <span>Click images to pause / toggle slideshow</span>
+              {/* Panel Bottom Footer Bar */}
+              <div className="p-4 sm:p-5 border-t border-[#202020] bg-[#141414] flex items-center justify-between shrink-0">
+                <span className="text-[11px] font-mono text-gray-400 flex items-center gap-2">
+                  <AISparkleIcon size={14} className="text-[#568f5e]" />
+                  <span>Click images to toggle slideshow</span>
                 </span>
                 <button
                   onClick={() => setSelectedProject(null)}
-                  className="px-4 py-2 bg-[#568f5e] hover:bg-[#487a4f] text-white font-mono text-xs font-semibold rounded-lg transition-colors"
+                  className="px-4 sm:px-5 py-2 bg-[#568f5e] hover:bg-[#487a4f] text-white font-mono text-xs font-semibold rounded-lg transition-colors cursor-pointer"
                 >
                   Close Details
                 </button>
               </div>
-            </motion.div>
+
+            </div>
           </motion.div>
-        )}
-      </AnimatePresence>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+
+  return (
+    <section id="work" className="py-10 md:py-24 border-t border-[#1e1e1e] relative">
+
+      {/* Render Modals into Portal */}
+      {mounted && createPortal(modalContent, document.body)}
+      {mounted && createPortal(<ProjectArchiveModal isOpen={isArchiveOpen} onClose={() => setIsArchiveOpen(false)} />, document.body)}
 
       {/* Section Header */}
       <div className="flex items-center justify-between mb-4 sm:mb-8">
@@ -358,20 +361,20 @@ export default function SelectedWorkSection() {
           <span className="text-white font-semibold">SELECTED WORK</span>
         </h2>
 
-        <a
-          href="#contact"
-          className="group inline-flex items-center gap-2 text-xs font-mono text-gray-400 hover:text-[#568f5e] transition-colors py-1.5"
+        <button
+          onClick={() => setIsArchiveOpen(true)}
+          className="group inline-flex items-center gap-2 text-xs font-mono text-gray-400 hover:text-[#568f5e] transition-colors py-1.5 cursor-pointer"
         >
           <span>SEE ALL PROJECTS</span>
           <ArrowUpRight size={15} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-        </a>
+        </button>
       </div>
 
       {/* Main Grid: Projects Container + Notebook */}
       <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 xl:gap-8 items-start relative">
         
         {/* Left Column: Projects Container */}
-        <div className="xl:col-span-7 bg-[#111111] border border-[#202020] rounded-xl overflow-hidden divide-y divide-[#202020] shadow-2xl">
+        <SpotlightCard className="xl:col-span-7 bg-[#111111] border border-[#202020] rounded-xl overflow-hidden divide-y divide-[#202020] shadow-2xl">
           {projects.map((project) => (
             <div
               key={project.title}
@@ -422,7 +425,7 @@ export default function SelectedWorkSection() {
               <ProjectThumbnailSlideshow images={project.images} title={project.title} />
             </div>
           ))}
-        </div>
+        </SpotlightCard>
 
         {/* Right Column: Sticky "HOW I THINK" Paper Notebook Pad */}
         <div className="xl:col-span-5 xl:sticky xl:top-20 h-fit w-full flex items-center justify-center mt-6 xl:mt-0">

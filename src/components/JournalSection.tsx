@@ -2,6 +2,8 @@
 
 import { ArrowUpRight, Award } from "lucide-react";
 import AISparkleIcon from "./icons/AISparkleIcon";
+import SpotlightCard from "./SpotlightCard";
+import { motion } from "framer-motion";
 
 const researchItems = [
   {
@@ -45,7 +47,7 @@ export default function JournalSection() {
       </div>
 
       {/* Unified Container for Research Items */}
-      <div className="bg-[#111111] border border-[#202020] rounded-xl overflow-hidden divide-y divide-[#202020] shadow-2xl">
+      <SpotlightCard className="bg-[#111111] border border-[#202020] rounded-xl overflow-hidden divide-y divide-[#202020] shadow-2xl">
         {researchItems.map((item) => (
           <a
             key={item.title}
@@ -74,7 +76,13 @@ export default function JournalSection() {
                   </span>
                 ) : (
                   <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-[#1d271f] border border-[#2e4431] text-[#69ab73] text-[10px] sm:text-[11px] font-mono font-semibold">
-                    <AISparkleIcon size={12} />
+                    <motion.span
+                      animate={{ opacity: [0.7, 1, 0.7] }}
+                      transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+                      className="inline-flex"
+                    >
+                      <AISparkleIcon size={12} />
+                    </motion.span>
                     <span>{item.badge}</span>
                   </span>
                 )}
@@ -91,7 +99,7 @@ export default function JournalSection() {
             </div>
           </a>
         ))}
-      </div>
+      </SpotlightCard>
 
     </div>
   );
