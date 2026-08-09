@@ -19,6 +19,17 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   const [profileImage, setProfileImage] = useState<string>("/images/about-portrait.jpg");
 
+  const loadProfileImage = () => {
+    fetch("/api/admin/data", { cache: "no-store" })
+      .then((res) => res.json())
+      .then((d) => {
+        if (d && d.about && d.about.profileImage) {
+          setProfileImage(d.about.profileImage);
+        }
+      })
+      .catch(() => {});
+  };
+
   useEffect(() => {
     // Check if session cookie is valid
     fetch("/api/admin/auth")
@@ -31,14 +42,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       })
       .catch(() => setIsAuthenticated(false));
 
-    fetch("/api/admin/data")
-      .then((res) => res.json())
-      .then((d) => {
-        if (d && d.about && d.about.profileImage) {
-          setProfileImage(d.about.profileImage);
-        }
-      })
-      .catch(() => {});
+    loadProfileImage();
+
+    window.addEventListener("portfolio-data-updated", loadProfileImage);
+    return () => {
+      window.removeEventListener("portfolio-data-updated", loadProfileImage);
+    };
   }, []);
 
   const handleLogin = async (e: React.FormEvent) => {

@@ -12,7 +12,7 @@ export default function AdminAboutPage() {
   const [toast, setToast] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch("/api/admin/data")
+    fetch("/api/admin/data", { cache: "no-store" })
       .then((res) => res.json())
       .then((d) => setData(d))
       .catch((err) => console.error(err));
@@ -29,6 +29,9 @@ export default function AdminAboutPage() {
       });
 
       if (res.ok) {
+        if (typeof window !== "undefined") {
+          window.dispatchEvent(new CustomEvent("portfolio-data-updated"));
+        }
         setToast("About Me section updated & revalidated!");
         setTimeout(() => setToast(null), 3000);
       }
@@ -55,11 +58,27 @@ export default function AdminAboutPage() {
 
       const result = await res.json();
       if (res.ok && result.url) {
-        setData({
+        const updatedData: PortfolioData = {
           ...data,
           about: { ...data.about, profileImage: result.url },
+        };
+        setData(updatedData);
+
+        // Auto-save the updated profile image
+        const saveRes = await fetch("/api/admin/data", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(updatedData),
         });
-        setToast("Profile photo uploaded!");
+
+        if (saveRes.ok) {
+          if (typeof window !== "undefined") {
+            window.dispatchEvent(new CustomEvent("portfolio-data-updated"));
+          }
+          setToast("Profile photo uploaded & saved!");
+        } else {
+          setToast("Profile photo uploaded!");
+        }
         setTimeout(() => setToast(null), 3000);
       } else {
         alert(result.error || "Photo upload failed");
@@ -161,6 +180,16 @@ export default function AdminAboutPage() {
               rows={3}
               value={data.about.narrativeParagraph1}
               onChange={(e) => setData({ ...data, about: { ...data.about, narrativeParagraph1: e.target.value } })}
+              className="w-full bg-[#161616] border border-[#262626] rounded-xl p-3 text-xs text-white leading-relaxed"
+            />
+          </div>
+
+          <div>
+            <label className="text-[11px] text-gray-400 uppercase font-semibold block mb-1">Narrative Paragraph 2</label>
+            <textarea
+              rows={3}
+              value={data.about.narrativeParagraph2 || ""}
+              onChange={(e) => setData({ ...data, about: { ...data.about, narrativeParagraph2: e.target.value } })}
               className="w-full bg-[#161616] border border-[#262626] rounded-xl p-3 text-xs text-white leading-relaxed"
             />
           </div>

@@ -46,13 +46,13 @@ export async function POST(request: Request) {
     }
 
     // Local development fallback
-    const uploadsDir = path.join(process.cwd(), "public", "images", "experience");
+    const uploadsDir = path.join(process.cwd(), "public", "images", "uploads");
     await mkdir(uploadsDir, { recursive: true });
 
     const filePath = path.join(uploadsDir, webpFileName);
     await writeFile(filePath, webpBuffer);
 
-    const publicUrl = `/images/experience/${webpFileName}`;
+    const publicUrl = `/images/uploads/${webpFileName}`;
     return NextResponse.json({ url: publicUrl, success: true, storage: "local", format: "webp" });
   } catch (error) {
     console.error("Error uploading file:", error);

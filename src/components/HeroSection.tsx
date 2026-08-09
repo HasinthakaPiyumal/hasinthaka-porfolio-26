@@ -23,7 +23,7 @@ export default function HeroSection() {
   const { scrollY } = useScroll();
 
   useEffect(() => {
-    fetch("/api/admin/data")
+    fetch("/api/admin/data", { cache: "no-store" })
       .then((res) => res.json())
       .then((data) => {
         if (data && data.hero) {

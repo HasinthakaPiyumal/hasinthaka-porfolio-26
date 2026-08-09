@@ -44,7 +44,7 @@ export default function AboutSection() {
   const [about, setAbout] = useState<AboutConfig>(defaultAbout);
 
   useEffect(() => {
-    fetch("/api/admin/data")
+    fetch("/api/admin/data", { cache: "no-store" })
       .then((res) => res.json())
       .then((data) => {
         if (data && data.about) {
