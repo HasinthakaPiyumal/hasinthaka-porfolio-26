@@ -1,11 +1,37 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import type { HeroConfig } from "@/lib/data";
+
+const defaultHero: HeroConfig = {
+  eyebrow: "SOFTWARE ENGINEER & RESEARCHER",
+  headlineLine1: "I TURN COMPLEX",
+  headlineLine2: "PROBLEMS INTO",
+  headlineAccent: "SOLUTIONS.",
+  description1: "I build systems, tools and intelligent applications that create real impact.",
+  description2: "Currently open to meaningful opportunities.",
+  ctaText: "VIEW MY WORK",
+  statusBadgeText: "STATUS: Building",
+  backgroundImage: "/images/84c0cdca-1d5e-4613-b846-504afd8f5221.webp",
+};
 
 export default function HeroSection() {
+  const [hero, setHero] = useState<HeroConfig>(defaultHero);
   const { scrollY } = useScroll();
+
+  useEffect(() => {
+    fetch("/api/admin/data")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && data.hero) {
+          setHero(data.hero);
+        }
+      })
+      .catch((err) => console.error("Error fetching hero data:", err));
+  }, []);
 
   // Desktop Scroll-driven animations
   const filter = useTransform(scrollY, [0, 300], ["grayscale(0%)", "grayscale(50%)"]);
@@ -28,7 +54,7 @@ export default function HeroSection() {
       >
         {/* Desktop Background Image */}
         <Image
-          src="/images/84c0cdca-1d5e-4613-b846-504afd8f5221.webp"
+          src={hero.backgroundImage || "/images/84c0cdca-1d5e-4613-b846-504afd8f5221.webp"}
           alt="Hasinthaka Workspace"
           fill
           priority
@@ -57,7 +83,7 @@ export default function HeroSection() {
             transition={{ duration: 0.4, delay: 0.1 }}
             className="text-xs sm:text-sm text-center sm:text-left font-mono tracking-[0.2em] text-[#444444] font-semibold uppercase mb-4 md:mb-5"
           >
-            SOFTWARE ENGINEER & RESEARCHER
+            {hero.eyebrow}
           </motion.div>
 
           {/* Headline */}
@@ -67,9 +93,9 @@ export default function HeroSection() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="font-bebas text-center sm:text-left text-4xl sm:text-5xl md:text-6xl lg:text-[78px] leading-[0.88] text-[#171717] tracking-tight uppercase mb-4 md:mb-5"
           >
-            I TURN COMPLEX<br />
-            PROBLEMS INTO<br />
-            SIMPLE <span className="text-[#568f5e]">SOLUTIONS.</span>
+            {hero.headlineLine1}<br />
+            {hero.headlineLine2}<br />
+            <span className="text-[#568f5e]">{hero.headlineAccent}</span>
           </motion.h1>
 
           {/* Description */}
@@ -79,8 +105,8 @@ export default function HeroSection() {
             transition={{ duration: 0.4, delay: 0.4 }}
             className="font-mono text-center sm:text-left text-md sm:text-sm text-[#333333] leading-relaxed max-w-[450px] mb-6 md:mb-8 space-y-1 font-medium"
           >
-            <p>I build systems, tools and intelligent applications that create real impact.</p>
-            <p className="text-[#555555]">Currently open to meaningful opportunities.</p>
+            <p>{hero.description1}</p>
+            {hero.description2 && <p className="text-[#555555]">{hero.description2}</p>}
           </motion.div>
 
           {/* CTA Link */}
@@ -94,7 +120,7 @@ export default function HeroSection() {
               className="group inline-flex items-center justify-center w-full sm:w-auto gap-2.5 text-xs sm:text-sm font-mono font-semibold text-[#171717] hover:text-[#568f5e] uppercase tracking-widest transition-colors py-1"
             >
               <span className="border-b border-[#171717] group-hover:border-[#568f5e] pb-0.5 transition-colors">
-                VIEW MY WORK
+                {hero.ctaText}
               </span>
               <ArrowRight size={14} className="group-hover:translate-x-1.5 transition-transform duration-200 text-[#171717] group-hover:text-[#568f5e]" />
             </button>
@@ -105,7 +131,7 @@ export default function HeroSection() {
         {/* Status Pill Badge */}
         <div className="absolute bottom-24 right-8 md:absolute md:bottom-8 md:right-8 z-20 flex items-center gap-2.5 bg-[#121212]/90 backdrop-blur-md border border-[#2a2a2a] px-4 py-2 rounded-md shadow-2xl w-fit mb-4 md:mb-0">
           <span className="text-[11px] font-mono tracking-widest text-gray-300 font-semibold uppercase">
-            STATUS: Building
+            {hero.statusBadgeText}
           </span>
           <span className="w-2 h-2 rounded-full bg-[#568f5e] animate-pulse" />
         </div>

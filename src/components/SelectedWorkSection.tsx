@@ -1,105 +1,182 @@
-"use client";
-
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
-import { ArrowUpRight, X, ChevronLeft, ChevronRight, CheckCircle } from "lucide-react";
+import { ArrowUpRight, X, ChevronLeft, ChevronRight, CheckCircle, ExternalLink, FileText } from "lucide-react";
 import AISparkleIcon from "./icons/AISparkleIcon";
 import SpotlightCard from "./SpotlightCard";
 import ProjectArchiveModal from "./ProjectArchiveModal";
 import { motion, AnimatePresence } from "framer-motion";
 
-interface Project {
+function GithubIcon({ className = "w-4 h-4" }: { className?: string }) {
+  return (
+    <svg className={className} fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
+    </svg>
+  );
+}
+
+export interface Project {
   num: string;
   title: string;
+  category: string;
+  year: string;
+  date?: string;
+  status?: "Published" | "Draft";
   description: string;
   fullDescription: string;
-  highlights: string[];
+  highlights?: string[];
   tags: string[];
   images: string[];
+  githubUrl?: string;
+  demoUrl?: string;
+  moreUrl?: string;
+  featured?: boolean;
 }
 
 const projects: Project[] = [
   {
     num: "01",
     title: "Zenlise: Automated App Publishing",
+    category: "Full-Stack",
+    year: "2026",
     description: "Microservices platform in Go & Python automating app deployment and store compliance checks with Redis task queues & Azure cloud.",
     fullDescription:
       "Zenlise is an enterprise microservice platform engineered to streamline and automate multi-platform app publishing workflows. Built with Go microservices and Python automation workers, the architecture features asynchronous task queues powered by Redis and automated cloud deployment pipelines on Azure cloud infrastructure.",
-    highlights: [
-      "Distributed microservices architecture built in Go & Python",
-      "Asynchronous background task processing with Redis Queues",
-      "Automated app store compliance validation engine",
-      "CI/CD deployment pipelines on Azure Cloud Infrastructure",
-    ],
+    highlights: [],
     tags: ["Go", "Python", "Next.js", "Redis", "Docker", "Azure"],
     images: [
       "/images/projects/zenlise.jpg",
       "/images/projects/documind.jpg",
       "/images/projects/shopease.jpg",
     ],
+    githubUrl: "https://github.com/HasinthakaPiyumal",
+    demoUrl: "https://zenlise.dev",
   },
   {
     num: "02",
     title: "Northstar Face Recognition System",
+    category: "Backend & AI",
+    year: "2026",
     description: "Edge-based facial recognition entry system using Flutter & MobileFaceNet with real-time anti-spoofing and liveness detection algorithms.",
     fullDescription:
       "Northstar is an edge-native biometric entry control platform. Utilizing TensorFlow Lite MobileFaceNet embeddings on client hardware, it performs real-time liveness verification, anti-spoofing texture detection, and instant vector matching for secure access management.",
-    highlights: [
-      "Real-time on-device vector embedding extraction via MobileFaceNet",
-      "Liveness detection & anti-spoofing security algorithms",
-      "Cross-platform Flutter kiosk UI with low-latency camera stream",
-      "Scalable sync API with PostgreSQL backend database",
-    ],
+    highlights: [],
     tags: ["Flutter", "TensorFlow Lite", "Python", "Edge AI"],
     images: [
       "/images/projects/hippocortex.jpg",
       "/images/projects/zenlise.jpg",
       "/images/projects/documind.jpg",
     ],
+    githubUrl: "https://github.com/HasinthakaPiyumal",
+    moreUrl: "https://arxiv.org/abs/2607.00558",
   },
   {
     num: "03",
     title: "Fuel-Master Quota Management",
+    category: "Full-Stack",
+    year: "2025",
     description: "3-tier monorepo system with Spring Boot backend, JWT RBAC, React admin dashboard, and Flutter mobile app with real-time field operations.",
     fullDescription:
       "Fuel-Master is a production-grade 3-tier enterprise quota management system. Built as a monorepo, it features a Spring Boot backend API with granular JWT role-based access control, a high-density React analytics dashboard, and a Flutter mobile app deployed to field operators for real-time validation.",
-    highlights: [
-      "3-Tier Monorepo architecture (Spring Boot + React + Flutter)",
-      "Granular RBAC security with JWT token authentication",
-      "Real-time QR quota verification & transaction logging",
-      "High-concurrency PostgreSQL database query optimization",
-    ],
+    highlights: [],
     tags: ["Java", "Spring Boot", "React", "Flutter", "PostgreSQL"],
     images: [
       "/images/projects/shopease.jpg",
       "/images/projects/hippocortex.jpg",
       "/images/projects/zenlise.jpg",
     ],
+    githubUrl: "https://github.com/HasinthakaPiyumal",
+    demoUrl: "https://fuelmaster.dev",
+    moreUrl: "https://github.com/HasinthakaPiyumal",
   },
   {
     num: "04",
     title: "Northstar Production Fitness Suite",
+    category: "Mobile Apps",
+    year: "2026",
     description: "Full-featured iOS & Android fitness management suite deployed to production stores with HealthKit/Google Fit telemetry sync.",
     fullDescription:
       "Northstar Production Fitness Suite is a commercial mobile application ecosystem published on iOS App Store and Google Play Store. It syncs real-time biometric telemetry via Apple HealthKit and Google Fit APIs, supported by a scalable Firebase backend and customized REST API integrations.",
-    highlights: [
-      "Production deployment on Apple App Store & Google Play Store",
-      "HealthKit & Google Fit API background telemetry sync",
-      "Real-time workout session tracking & analytics dashboards",
-      "Offline-first sync queue architecture with Firebase Cloud Store",
-    ],
+    highlights: [],
     tags: ["Flutter", "Firebase", "REST APIs", "iOS/Android"],
     images: [
       "/images/projects/documind.jpg",
       "/images/projects/shopease.jpg",
       "/images/projects/hippocortex.jpg",
     ],
+    demoUrl: "https://apps.apple.com",
+  },
+  {
+    num: "05",
+    title: "DocuMind AI - Intelligent PDF Assistant",
+    category: "Backend & AI",
+    year: "2026",
+    description: "Enterprise PDF document intelligence system with vector embeddings, semantic RAG search, and interactive AI chat assistant.",
+    fullDescription:
+      "DocuMind AI is an enterprise document intelligence platform capable of parsing large PDF document libraries, extracting vector embeddings, running high-accuracy semantic RAG retrieval, and generating grounded responses with exact page citations.",
+    highlights: [],
+    tags: ["Python", "FastAPI", "React", "TailwindCSS", "Vector DB"],
+    images: [
+      "/images/projects/documind.jpg",
+      "/images/projects/zenlise.jpg",
+    ],
+    githubUrl: "https://github.com/HasinthakaPiyumal",
+    demoUrl: "https://documind-ai.dev",
+  },
+  {
+    num: "06",
+    title: "Distributed Task Queue Engine",
+    category: "Backend & AI",
+    year: "2025",
+    description: "High-throughput asynchronous job processing engine written in Go with Redis queue backend, failure retries, and metrics dashboard.",
+    fullDescription:
+      "A distributed, high-performance background job processing framework built in Go. Features concurrent worker pools, Redis-backed persistent state, customizable retry backoffs, dead-letter queue routing, and Prometheus metrics telemetry.",
+    highlights: [],
+    tags: ["Go", "Redis", "Docker", "Prometheus"],
+    images: [
+      "/images/projects/zenlise.jpg",
+      "/images/projects/shopease.jpg",
+    ],
+    githubUrl: "https://github.com/HasinthakaPiyumal",
+  },
+  {
+    num: "07",
+    title: "WSO2 Enterprise Gateway Extension Suite",
+    category: "Open Source",
+    year: "2025",
+    description: "API management extensions, OAuth2 custom authenticators, and Identity Server integration plugins built for enterprise middleware.",
+    fullDescription:
+      "Contributed enterprise middleware extensions to WSO2 API Manager and Identity Server. Developed custom Java/Ballerina OAuth2 authenticators, request transformation handlers, and rate-limiting enforcement interceptors.",
+    highlights: [],
+    tags: ["Java", "Spring Boot", "Ballerina", "OAuth2"],
+    images: [
+      "/images/projects/hippocortex.jpg",
+      "/images/projects/documind.jpg",
+    ],
+    githubUrl: "https://github.com/HasinthakaPiyumal",
+    moreUrl: "https://wso2.com",
+  },
+  {
+    num: "08",
+    title: "Call-Graph AI Pattern Extractor",
+    category: "Backend & AI",
+    year: "2024",
+    description: "Empirical methodology tool for detecting AI architectural patterns in software repositories using call-graph community chunking.",
+    fullDescription:
+      "Research software tool powering the arXiv:2607.00558 publication. Extracts abstract syntax trees and call-graphs from multi-language code bases to detect and classify AI design pattern prevalence.",
+    highlights: [],
+    tags: ["Python", "NetworkX", "ArXiv", "Scikit-Learn"],
+    images: [
+      "/images/projects/shopease.jpg",
+      "/images/projects/zenlise.jpg",
+    ],
+    githubUrl: "https://github.com/HasinthakaPiyumal",
+    moreUrl: "https://arxiv.org/abs/2607.00558",
   },
 ];
 
 // Thumbnail Auto-Slide Component for Card Preview
-function ProjectThumbnailSlideshow({ images, title }: { images: string[]; title: string }) {
+export function ProjectThumbnailSlideshow({ images, title }: { images: string[]; title: string }) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
@@ -243,10 +320,35 @@ export default function SelectedWorkSection() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isArchiveOpen, setIsArchiveOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [projectList, setProjectList] = useState<Project[]>(projects);
 
   useEffect(() => {
     setMounted(true);
+    fetch("/api/admin/data")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && data.projects && data.projects.length > 0) {
+          setProjectList(data.projects);
+        }
+      })
+      .catch((err) => console.error("Error fetching projects:", err));
   }, []);
+
+  const publishedProjects = projectList.filter((p) => p.status !== "Draft");
+  const featuredProjects = publishedProjects.filter((p) => p.featured);
+  const displayProjects = featuredProjects.length > 0 ? featuredProjects : publishedProjects.slice(0, 6);
+
+  useEffect(() => {
+    if (selectedProject || isArchiveOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [selectedProject, isArchiveOpen]);
 
   const modalContent = (
     <AnimatePresence>
@@ -256,7 +358,7 @@ export default function SelectedWorkSection() {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={() => setSelectedProject(null)}
-          className="fixed inset-0 z-[9999] bg-black/95 backdrop-blur-2xl flex items-center justify-center cursor-zoom-out p-0"
+          className="fixed inset-0 z-[10000] bg-black/95 backdrop-blur-2xl flex items-center justify-center cursor-zoom-out p-0"
         >
           <motion.div
             initial={{ scale: 0.98, opacity: 0 }}
@@ -324,17 +426,71 @@ export default function SelectedWorkSection() {
                     ))}
                   </div>
                 </div>
+
+                {/* 3 Action Buttons (GitHub, View Demo, More Details) - Only rendered if link exists */}
+                {(selectedProject.githubUrl || selectedProject.demoUrl || selectedProject.moreUrl) && (
+                  <div className="space-y-3 pt-4 border-t border-[#202020]">
+                    <h4 className="text-xs font-mono font-semibold text-gray-400 uppercase tracking-widest flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#568f5e]" />
+                      Project Links & Actions
+                    </h4>
+                    <div className="flex flex-wrap gap-2.5">
+                      {selectedProject.githubUrl && (
+                        <a
+                          href={selectedProject.githubUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="flex-1 min-w-[110px] flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-lg bg-[#161616] border border-[#262626] hover:border-[#568f5e] text-xs font-mono text-gray-200 hover:text-white transition-all group cursor-pointer shadow-md"
+                        >
+                          <GithubIcon className="w-3.5 h-3.5 text-gray-400 group-hover:text-[#568f5e]" />
+                          <span>GitHub</span>
+                          <ArrowUpRight size={13} className="text-gray-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                        </a>
+                      )}
+
+                      {selectedProject.demoUrl && (
+                        <a
+                          href={selectedProject.demoUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="flex-1 min-w-[110px] flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-lg bg-[#568f5e]/20 border border-[#568f5e]/50 hover:bg-[#568f5e] text-xs font-mono text-[#568f5e] hover:text-white transition-all font-semibold group cursor-pointer shadow-md"
+                        >
+                          <ExternalLink size={13} />
+                          <span>View Demo</span>
+                          <ArrowUpRight size={13} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                        </a>
+                      )}
+
+                      {selectedProject.moreUrl && (
+                        <a
+                          href={selectedProject.moreUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="flex-1 min-w-[110px] flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-lg bg-[#1d1d1d] border border-[#2a2a2a] hover:border-[#568f5e] text-xs font-mono text-gray-300 hover:text-white transition-all group cursor-pointer shadow-md"
+                        >
+                          <FileText size={13} className="text-gray-400 group-hover:text-[#568f5e]" />
+                          <span>More Details</span>
+                          <ArrowUpRight size={13} className="text-gray-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Panel Bottom Footer Bar */}
-              <div className="p-4 sm:p-5 border-t border-[#202020] bg-[#141414] flex items-center justify-between shrink-0">
-                <span className="text-[11px] font-mono text-gray-400 flex items-center gap-2">
+              <div className="p-3.5 sm:p-5 border-t border-[#202020] bg-[#141414] flex items-center justify-between gap-3 shrink-0">
+                <span className="hidden sm:flex items-center gap-2 text-[11px] font-mono text-gray-400">
                   <AISparkleIcon size={14} className="text-[#568f5e]" />
                   <span>Click images to toggle slideshow</span>
                 </span>
+                <span className="sm:hidden flex items-center gap-1.5 text-[10px] font-mono text-gray-400 min-w-0 truncate">
+                  <AISparkleIcon size={12} className="text-[#568f5e] shrink-0" />
+                  <span className="truncate">Tap image to toggle</span>
+                </span>
                 <button
                   onClick={() => setSelectedProject(null)}
-                  className="px-4 sm:px-5 py-2 bg-[#568f5e] hover:bg-[#487a4f] text-white font-mono text-xs font-semibold rounded-lg transition-colors cursor-pointer"
+                  className="px-4 sm:px-5 py-2 bg-[#568f5e] hover:bg-[#487a4f] text-white font-mono text-xs font-semibold rounded-lg transition-colors cursor-pointer whitespace-nowrap shrink-0"
                 >
                   Close Details
                 </button>
@@ -352,7 +508,15 @@ export default function SelectedWorkSection() {
 
       {/* Render Modals into Portal */}
       {mounted && createPortal(modalContent, document.body)}
-      {mounted && createPortal(<ProjectArchiveModal isOpen={isArchiveOpen} onClose={() => setIsArchiveOpen(false)} />, document.body)}
+      {mounted && createPortal(
+        <ProjectArchiveModal
+          isOpen={isArchiveOpen}
+          onClose={() => setIsArchiveOpen(false)}
+          allProjects={projectList}
+          onSelectProject={(proj) => setSelectedProject(proj)}
+        />,
+        document.body
+      )}
 
       {/* Section Header */}
       <div className="flex items-center justify-between mb-4 sm:mb-8">
@@ -365,7 +529,7 @@ export default function SelectedWorkSection() {
           onClick={() => setIsArchiveOpen(true)}
           className="group inline-flex items-center gap-2 text-xs font-mono text-gray-400 hover:text-[#568f5e] transition-colors py-1.5 cursor-pointer"
         >
-          <span>SEE ALL PROJECTS</span>
+          <span>SEE ALL PROJECTS ({publishedProjects.length})</span>
           <ArrowUpRight size={15} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
         </button>
       </div>
@@ -373,58 +537,63 @@ export default function SelectedWorkSection() {
       {/* Main Grid: Projects Container + Notebook */}
       <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 xl:gap-8 items-start relative">
         
-        {/* Left Column: Projects Container */}
+        {/* Left Column: Featured Projects Container */}
         <SpotlightCard className="xl:col-span-7 bg-[#111111] border border-[#202020] rounded-xl overflow-hidden divide-y divide-[#202020] shadow-2xl">
-          {projects.map((project) => (
-            <div
-              key={project.title}
-              onClick={() => setSelectedProject(project)}
-              className="group p-4 sm:p-5 hover:bg-[#151515] transition-colors duration-300 flex flex-col sm:flex-row items-start sm:items-center gap-3.5 sm:gap-4 cursor-pointer"
-            >
-              {/* Text Information Column */}
-              <div className="flex items-start gap-3 flex-1 min-w-0 w-full">
-                {/* Number Anchor (Desktop only) */}
-                <div className="hidden sm:flex flex-col items-center shrink-0 pt-0.5 self-stretch">
-                  <span className="text-xs font-mono font-bold text-[#568f5e]">
-                    {project.num}
-                  </span>
-                  <div className="w-[1px] flex-1 bg-[#242424] my-1.5 min-h-[32px] relative">
-                    <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-[#3a3a3a] group-hover:bg-[#568f5e] transition-colors" />
-                  </div>
-                </div>
+          {displayProjects.map((project) => {
+            const projectImages = project.images && project.images.length > 0 ? project.images : ["/images/projects/zenlise.jpg"];
+            const projectTags = project.tags || [];
 
-                {/* Main Content */}
-                <div className="flex-1 min-w-0 space-y-1.5">
-                  <h3 className="text-sm sm:text-base font-mono font-semibold text-white group-hover:text-[#568f5e] transition-colors tracking-tight flex items-center justify-between gap-2">
-                    <div className="flex items-center min-w-0">
-                      <span className="text-[#568f5e] font-bold mr-2 sm:hidden">{project.num}</span>
-                      <span className="truncate">{project.title}</span>
+            return (
+              <div
+                key={project.title + project.num}
+                onClick={() => setSelectedProject({ ...project, images: projectImages, tags: projectTags })}
+                className="group p-4 sm:p-5 hover:bg-[#151515] transition-colors duration-300 flex flex-col sm:flex-row items-start sm:items-center gap-3.5 sm:gap-4 cursor-pointer"
+              >
+                {/* Text Information Column */}
+                <div className="flex items-start gap-3 flex-1 min-w-0 w-full">
+                  {/* Number Anchor (Desktop only) */}
+                  <div className="hidden sm:flex flex-col items-center shrink-0 pt-0.5 self-stretch">
+                    <span className="text-xs font-mono font-bold text-[#568f5e]">
+                      {project.num}
+                    </span>
+                    <div className="w-[1px] flex-1 bg-[#242424] my-1.5 min-h-[32px] relative">
+                      <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-[#3a3a3a] group-hover:bg-[#568f5e] transition-colors" />
                     </div>
-                    <ArrowUpRight size={16} className="text-gray-500 group-hover:text-[#568f5e] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0" />
-                  </h3>
+                  </div>
 
-                  <p className="text-[11px] sm:text-xs font-mono text-gray-400 leading-relaxed">
-                    {project.description}
-                  </p>
+                  {/* Main Content */}
+                  <div className="flex-1 min-w-0 space-y-1.5">
+                    <h3 className="text-sm sm:text-base font-mono font-semibold text-white group-hover:text-[#568f5e] transition-colors tracking-tight flex items-center justify-between gap-2">
+                      <div className="flex items-center min-w-0">
+                        <span className="text-[#568f5e] font-bold mr-2 sm:hidden">{project.num}</span>
+                        <span className="truncate">{project.title}</span>
+                      </div>
+                      <ArrowUpRight size={16} className="text-gray-500 group-hover:text-[#568f5e] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0" />
+                    </h3>
 
-                  {/* Tech Tags */}
-                  <div className="flex flex-wrap gap-1.5 pt-1">
-                    {project.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="text-[10px] sm:text-[11px] font-mono text-gray-300 bg-[#181818] border border-[#262626] px-2 py-0.5 rounded transition-colors"
-                      >
-                        {tag}
-                      </span>
-                    ))}
+                    <p className="text-[11px] sm:text-xs font-mono text-gray-400 leading-relaxed">
+                      {project.description}
+                    </p>
+
+                    {/* Tech Tags */}
+                    <div className="flex flex-wrap gap-1.5 pt-1">
+                      {projectTags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="text-[10px] sm:text-[11px] font-mono text-gray-300 bg-[#181818] border border-[#262626] px-2 py-0.5 rounded transition-colors"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Automatic Thumbnail Slideshow */}
-              <ProjectThumbnailSlideshow images={project.images} title={project.title} />
-            </div>
-          ))}
+                {/* Automatic Thumbnail Slideshow */}
+                <ProjectThumbnailSlideshow images={projectImages} title={project.title} />
+              </div>
+            );
+          })}
         </SpotlightCard>
 
         {/* Right Column: Sticky "HOW I THINK" Paper Notebook Pad */}

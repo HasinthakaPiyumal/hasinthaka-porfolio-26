@@ -1,11 +1,13 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { ArrowUpRight, Award } from "lucide-react";
 import AISparkleIcon from "./icons/AISparkleIcon";
 import SpotlightCard from "./SpotlightCard";
 import { motion } from "framer-motion";
+import type { ResearchItem } from "@/lib/data";
 
-const researchItems = [
+const defaultResearchItems: ResearchItem[] = [
   {
     citation: "arXiv:2607.00558",
     title: "A Methodology for Investigating AI Pattern Prevalence in Software Repositories",
@@ -25,6 +27,18 @@ const researchItems = [
 ];
 
 export default function JournalSection() {
+  const [researchItems, setResearchItems] = useState<ResearchItem[]>(defaultResearchItems);
+
+  useEffect(() => {
+    fetch("/api/admin/data")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && data.research && data.research.length > 0) {
+          setResearchItems(data.research);
+        }
+      })
+      .catch((err) => console.error("Error fetching research:", err));
+  }, []);
   return (
     <div className="space-y-6">
       
@@ -36,7 +50,7 @@ export default function JournalSection() {
         </h2>
 
         <a
-          href="https://arxiv.org/abs/2607.00558"
+          href={researchItems[0]?.href || "https://arxiv.org/abs/2607.00558"}
           target="_blank"
           rel="noreferrer"
           className="group inline-flex items-center gap-2 text-xs font-mono text-gray-400 hover:text-[#568f5e] transition-colors py-1.5"

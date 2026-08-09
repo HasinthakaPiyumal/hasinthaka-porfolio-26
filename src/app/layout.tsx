@@ -23,6 +23,7 @@ const caveat = Caveat({
 export const metadata: Metadata = {
   title: "Hasinthaka | Software Engineer",
   description: "I turn complex problems into simple solutions. Portfolio of Hasinthaka, Software Engineer.",
+  appleWebApp: { capable: true, title: "Hasinthaka", statusBarStyle: "black-translucent" }
 };
 
 export default function RootLayout({

@@ -1,9 +1,25 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Code2, Cpu, Globe2, Award, Terminal, FileText, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import type { AboutConfig } from "@/lib/data";
+
+const defaultAbout: AboutConfig = {
+  fullName: "Hasinthaka Piyumal",
+  titleBadge: "Software Engineer & Final-Year Undergraduate",
+  profileImage: "/images/about-portrait.jpg",
+  subtitleBio: "Final-year Software Engineering student at University of Kelaniya. Specializing in distributed backend microservices, applied machine learning pipelines, and full-stack web/mobile application development.",
+  narrativeParagraph1: "With 3+ years of freelance experience delivering web and mobile apps alongside enterprise engineering experience at WSO2 and Zenlise, I build software that balances technical rigor with real-world product reliability.",
+  narrativeParagraph2: "My academic research in AI design pattern prevalence won the Best Paper Award at PATTERNS 2026 and is published on arXiv.",
+  certifications: ["IBM Machine Learning Certified", "Duke University Explainable AI (XAI)"],
+  signatureQuote: "Let's build something impactful.",
+  yearsExperience: "3+",
+  productionApps: "4+",
+  arxivPapers: "1",
+  awardNotice: "PATTERNS 2026",
+};
 
 const expertise = [
   {
@@ -25,6 +41,18 @@ const expertise = [
 
 export default function AboutSection() {
   const [isImageOpen, setIsImageOpen] = useState(false);
+  const [about, setAbout] = useState<AboutConfig>(defaultAbout);
+
+  useEffect(() => {
+    fetch("/api/admin/data")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && data.about) {
+          setAbout(data.about);
+        }
+      })
+      .catch((err) => console.error("Error fetching about data:", err));
+  }, []);
 
   return (
     <div className="space-y-8">
@@ -62,8 +90,8 @@ export default function AboutSection() {
               {/* Image Frame */}
               <div className="relative w-full h-[50vh] sm:h-[62vh] bg-[#0a0a0a] overflow-hidden">
                 <Image
-                  src="/images/about-portrait.jpg"
-                  alt="Hasinthaka Piyumal"
+                  src={about.profileImage || "/images/about-portrait.jpg"}
+                  alt={about.fullName || "Hasinthaka Piyumal"}
                   fill
                   unoptimized
                   className="object-contain object-center"
@@ -79,7 +107,7 @@ export default function AboutSection() {
                       <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#568f5e]"></span>
                     </span>
                     <h3 className="text-lg sm:text-xl font-mono font-bold text-white tracking-tight">
-                      Hasinthaka Piyumal
+                      {about.fullName}
                     </h3>
                   </div>
 
@@ -90,11 +118,11 @@ export default function AboutSection() {
 
                 <p className="text-xs sm:text-sm font-mono text-gray-300 flex items-center gap-2">
                   <Terminal size={14} className="text-[#568f5e] shrink-0" />
-                  <span>Final-Year Undergraduate @ University of Kelaniya</span>
+                  <span>{about.titleBadge}</span>
                 </p>
 
                 <p className="text-[11px] sm:text-xs font-mono text-gray-400 leading-relaxed pt-0.5">
-                  Enterprise engineering experience at WSO2 & Zenlise • Specializing in Microservices, Applied ML & Full-Stack Systems
+                  {about.subtitleBio}
                 </p>
               </div>
             </motion.div>
@@ -121,8 +149,8 @@ export default function AboutSection() {
               title="Click to view full screen"
             >
               <Image
-                src="/images/about-portrait.jpg"
-                alt="Hasinthaka Piyumal"
+                src={about.profileImage || "/images/about-portrait.jpg"}
+                alt={about.fullName}
                 fill
                 unoptimized
                 className="object-cover object-center grayscale group-hover/img:grayscale-0 group-hover/img:scale-105 transition-all duration-500"
@@ -131,28 +159,30 @@ export default function AboutSection() {
 
             <div className="space-y-1 flex-1 min-w-0">
               <h3 className="text-base sm:text-2xl font-mono font-bold text-white tracking-tight truncate">
-                Hasinthaka Piyumal
+                {about.fullName}
               </h3>
               <p className="text-[10px] sm:text-xs font-mono text-[#568f5e] font-semibold flex items-center gap-1.5">
                 <Terminal className="w-3 h-3 sm:w-3.5 sm:h-3.5 shrink-0" />
-                <span className="truncate">Software Engineer & Final-Year Undergraduate</span>
+                <span className="truncate">{about.titleBadge}</span>
               </p>
             </div>
           </div>
 
           {/* Subtitle Bio */}
           <p className="text-[11px] sm:text-xs font-mono text-gray-400 leading-relaxed">
-            Final-year Software Engineering student at University of Kelaniya. Specializing in distributed backend microservices, applied machine learning pipelines, and full-stack web/mobile application development.
+            {about.subtitleBio}
           </p>
 
           {/* Narrative Body */}
           <div className="space-y-2 sm:space-y-3 text-[11px] sm:text-xs font-mono text-gray-300 leading-relaxed border-t border-[#202020] pt-3.5 sm:pt-5">
             <p>
-              With 3+ years of freelance experience delivering web and mobile apps alongside enterprise engineering experience at WSO2 and Zenlise, I build software that balances technical rigor with real-world product reliability.
+              {about.narrativeParagraph1}
             </p>
-            <p className="text-gray-400">
-              My academic research in AI design pattern prevalence won the Best Paper Award at PATTERNS 2026 and is published on arXiv.
-            </p>
+            {about.narrativeParagraph2 && (
+              <p className="text-gray-400">
+                {about.narrativeParagraph2}
+              </p>
+            )}
           </div>
 
           {/* Certifications & Credentials */}
@@ -161,24 +191,22 @@ export default function AboutSection() {
               CERTIFICATIONS & CREDENTIALS
             </div>
             <div className="flex flex-wrap gap-1.5 sm:gap-2 text-[10px] sm:text-[11px] font-mono text-gray-300">
-              <span className="bg-[#181818] border border-[#262626] px-2.5 py-1 rounded-md flex items-center gap-1.5">
-                <Award size={12} className="text-[#568f5e]" />
-                IBM Machine Learning Certified
-              </span>
-              <span className="bg-[#181818] border border-[#262626] px-2.5 py-1 rounded-md flex items-center gap-1.5">
-                <FileText size={12} className="text-[#568f5e]" />
-                Duke University Explainable AI (XAI)
-              </span>
+              {about.certifications && about.certifications.map((cert, idx) => (
+                <span key={idx} className="bg-[#181818] border border-[#262626] px-2.5 py-1 rounded-md flex items-center gap-1.5">
+                  <Award size={12} className="text-[#568f5e]" />
+                  {cert}
+                </span>
+              ))}
             </div>
           </div>
 
           {/* Signature Quote */}
           <div className="border-t border-[#202020] pt-3 sm:pt-4 flex flex-row items-center justify-between gap-2">
             <div className="font-handwritten text-base sm:text-xl text-[#568f5e] font-bold">
-              Let&apos;s build something impactful.
+              {about.signatureQuote}
             </div>
             <div className="font-handwritten text-xs sm:text-sm text-gray-400">
-              – Hasinthaka Piyumal
+              – {about.fullName}
             </div>
           </div>
         </div>
@@ -190,22 +218,22 @@ export default function AboutSection() {
           <div className="bg-[#111111] border border-[#202020] rounded-xl overflow-hidden divide-y divide-[#202020] shadow-2xl">
             <div className="grid grid-cols-2 divide-x divide-[#202020]">
               <div className="p-3 sm:p-5 text-center space-y-0.5 sm:space-y-1">
-                <div className="text-xl sm:text-3xl font-mono font-bold text-white">3+</div>
+                <div className="text-xl sm:text-3xl font-mono font-bold text-white">{about.yearsExperience}</div>
                 <div className="text-[10px] sm:text-[11px] font-mono text-gray-400">Years Experience</div>
               </div>
               <div className="p-3 sm:p-5 text-center space-y-0.5 sm:space-y-1">
-                <div className="text-xl sm:text-3xl font-mono font-bold text-white">4+</div>
+                <div className="text-xl sm:text-3xl font-mono font-bold text-white">{about.productionApps}</div>
                 <div className="text-[10px] sm:text-[11px] font-mono text-gray-400">Production Apps</div>
               </div>
             </div>
             <div className="grid grid-cols-2 divide-x divide-[#202020]">
               <div className="p-3 sm:p-5 text-center space-y-0.5 sm:space-y-1">
-                <div className="text-xl sm:text-3xl font-mono font-bold text-white">1</div>
+                <div className="text-xl sm:text-3xl font-mono font-bold text-white">{about.arxivPapers}</div>
                 <div className="text-[10px] sm:text-[11px] font-mono text-gray-400">arXiv Publication</div>
               </div>
               <div className="p-3 sm:p-5 text-center space-y-0.5 sm:space-y-1">
                 <div className="text-base sm:text-xl font-mono font-bold text-[#568f5e] pt-0.5">Best Paper</div>
-                <div className="text-[10px] sm:text-[11px] font-mono text-gray-400">PATTERNS 2026</div>
+                <div className="text-[10px] sm:text-[11px] font-mono text-gray-400">{about.awardNotice}</div>
               </div>
             </div>
           </div>

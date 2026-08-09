@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -18,8 +18,64 @@ const navItems = [
   { id: "contact", label: "Contact", num: "07" },
 ];
 
+const roles = ["software_engineer", "ml_engineer", "researcher"];
+
+function TypewriterRole() {
+  const [roleIndex, setRoleIndex] = useState(0);
+  const [subIndex, setSubIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    const currentRole = roles[roleIndex];
+
+    // Pause at full word before deleting
+    if (!isDeleting && subIndex === currentRole.length) {
+      const timeout = setTimeout(() => {
+        setIsDeleting(true);
+      }, 2000);
+      return () => clearTimeout(timeout);
+    }
+
+    // Switch to next word when deleted completely
+    if (isDeleting && subIndex === 0) {
+      setIsDeleting(false);
+      setRoleIndex((prev) => (prev + 1) % roles.length);
+      return;
+    }
+
+    // Type or delete characters
+    const speed = isDeleting ? 40 : 80;
+    const timeout = setTimeout(() => {
+      setSubIndex((prev) => prev + (isDeleting ? -1 : 1));
+    }, speed);
+
+    return () => clearTimeout(timeout);
+  }, [subIndex, isDeleting, roleIndex]);
+
+  const currentText = roles[roleIndex].substring(0, subIndex);
+
+  return (
+    <div className="flex items-center gap-1 min-h-[20px]">
+      <span className="text-[#568f5e] font-semibold">&gt; {currentText}</span>
+      <span className="inline-block w-2 h-4 bg-[#568f5e] animate-pulse" />
+    </div>
+  );
+}
+
 export default function SidebarNav({ activeSection }: SidebarNavProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileMenuOpen]);
 
   const scrollToSection = (id: string) => {
     setMobileMenuOpen(false);
@@ -79,9 +135,9 @@ export default function SidebarNav({ activeSection }: SidebarNavProps) {
 
           <div className="border-t border-[#222222] pt-6 flex flex-col gap-4 text-xs font-mono text-gray-400">
             <div className="bg-[#141414] border border-[#222222] p-4 rounded text-xs font-mono leading-relaxed">
-              <div className="text-gray-500">hasinthaka@dev:~</div>
-              <div>$ whoami</div>
-              <div className="text-[#568f5e] font-semibold">&gt; builder</div>
+              <div className="text-gray-500 mb-1">hasinthaka@dev:~</div>
+              <div className="text-gray-400 mb-0.5">$ whoami</div>
+              <TypewriterRole />
             </div>
           </div>
         </div>
@@ -143,11 +199,8 @@ export default function SidebarNav({ activeSection }: SidebarNavProps) {
           {/* Mini Terminal Card */}
           <div className="bg-[#121212] border border-[#202020] p-4 rounded-md text-xs font-mono leading-relaxed text-gray-300">
             <div className="text-gray-500 mb-1">hasinthakapiyumal@dev:~</div>
-            <div>$ whoami</div>
-            <div className="flex items-center gap-1">
-              <span className="text-gray-300">&gt; software_engineer</span>
-              <span className="inline-block w-2 h-4 bg-white animate-pulse" />
-            </div>
+            <div className="text-gray-400 mb-0.5">$ whoami</div>
+            <TypewriterRole />
           </div>
         </div>
       </aside>

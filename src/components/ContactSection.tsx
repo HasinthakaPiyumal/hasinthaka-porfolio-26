@@ -1,7 +1,20 @@
-import { useState } from "react";
+"use client";
+
+import { useState, useEffect } from "react";
 import { Mail, Phone, MapPin, ArrowRight, Send, Check } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import SpotlightCard from "./SpotlightCard";
+import type { ContactConfig } from "@/lib/data";
+
+const defaultContact: ContactConfig = {
+  email: "hasinthakapiyumal@gmail.com",
+  phone: "+94 76 321 5389",
+  github: "https://github.com/HasinthakaPiyumal",
+  linkedin: "https://linkedin.com/in/hasinthaka-piyumal",
+  twitter: "https://twitter.com/HasinthakaPiyumal",
+  availabilityStatus: "Open to Opportunities",
+  footerText: "© 2026 Hasinthaka Piyumal. All rights reserved.",
+};
 
 function GithubIcon({ className = "w-5 h-5" }: { className?: string }) {
   return (
@@ -21,9 +34,21 @@ function LinkedinIcon({ className = "w-5 h-5" }: { className?: string }) {
 
 export default function ContactSection() {
   const [copied, setCopied] = useState(false);
+  const [contact, setContact] = useState<ContactConfig>(defaultContact);
+
+  useEffect(() => {
+    fetch("/api/admin/data")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && data.contact) {
+          setContact(data.contact);
+        }
+      })
+      .catch((err) => console.error("Error fetching contact data:", err));
+  }, []);
 
   const handleCopyEmail = () => {
-    navigator.clipboard.writeText("hasinthakapiyumal@gmail.com");
+    navigator.clipboard.writeText(contact.email || "hasinthakapiyumal@gmail.com");
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -54,7 +79,9 @@ export default function ContactSection() {
             <div className="pt-1 sm:pt-2">
               <motion.a
                 whileTap={{ scale: 0.97 }}
-                href="whatsapp://send?phone=94763215389&text=Hello%20Hasinthaka,%20I'd%20like%20to%20connect%20with%20you!"
+                href={`https://wa.me/${contact.phone.replace(/[^0-9]/g, "")}?text=Hello%20Hasinthaka,%20I'd%20like%20to%20connect%20with%20you!`}
+                target="_blank"
+                rel="noreferrer"
                 className="inline-flex items-center gap-2 px-4 py-2.5 sm:px-5 sm:py-3 rounded-lg bg-[#568f5e] hover:bg-[#487a4f] text-white font-mono text-xs font-semibold transition-all shadow-lg hover:shadow-[#568f5e]/20 group cursor-pointer"
               >
                 <Send size={14} />
@@ -90,12 +117,12 @@ export default function ContactSection() {
                       )}
                     </AnimatePresence>
                   </div>
-                  <div className="text-gray-200 group-hover:text-white text-xs truncate">hasinthakapiyumal@gmail.com</div>
+                  <div className="text-gray-200 group-hover:text-white text-xs truncate">{contact.email}</div>
                 </div>
               </div>
 
               <a
-                href="tel:+94763215389"
+                href={`tel:${contact.phone}`}
                 className="flex items-center gap-3 p-2.5 sm:p-3 rounded-lg bg-[#111111] border border-[#222222] hover:border-[#568f5e]/50 transition-colors group"
               >
                 <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-md bg-[#1d1d1d] flex items-center justify-center text-[#568f5e] group-hover:bg-[#568f5e] group-hover:text-white transition-colors shrink-0">
@@ -103,7 +130,7 @@ export default function ContactSection() {
                 </div>
                 <div className="flex-1">
                   <div className="text-[9px] sm:text-[10px] text-gray-500 uppercase tracking-wider">Phone</div>
-                  <div className="text-gray-200 group-hover:text-white text-xs">+94 76 321 5389</div>
+                  <div className="text-gray-200 group-hover:text-white text-xs">{contact.phone}</div>
                 </div>
               </a>
 
@@ -112,8 +139,8 @@ export default function ContactSection() {
                   <MapPin size={15} />
                 </div>
                 <div className="flex-1">
-                  <div className="text-[9px] sm:text-[10px] text-gray-500 uppercase tracking-wider">Location</div>
-                  <div className="text-gray-200 text-xs">Colombo, Sri Lanka</div>
+                  <div className="text-[9px] sm:text-[10px] text-gray-500 uppercase tracking-wider">Status & Location</div>
+                  <div className="text-gray-200 text-xs">{contact.availabilityStatus || "Open to Opportunities"}</div>
                 </div>
               </div>
             </div>
@@ -125,7 +152,7 @@ export default function ContactSection() {
               </div>
               <div className="flex items-center gap-2">
                 <a
-                  href="https://github.com/HasinthakaPiyumal"
+                  href={contact.github || "https://github.com/HasinthakaPiyumal"}
                   target="_blank"
                   rel="noreferrer"
                   className="flex-1 flex items-center justify-center gap-1.5 py-1.5 px-2.5 bg-[#111111] border border-[#222222] hover:border-[#568f5e]/50 text-gray-300 hover:text-white rounded-md text-xs font-mono transition-colors"
@@ -134,7 +161,7 @@ export default function ContactSection() {
                   <span>GitHub</span>
                 </a>
                 <a
-                  href="https://linkedin.com/in/hasinthaka-piyumal"
+                  href={contact.linkedin || "https://linkedin.com/in/hasinthaka-piyumal"}
                   target="_blank"
                   rel="noreferrer"
                   className="flex-1 flex items-center justify-center gap-1.5 py-1.5 px-2.5 bg-[#111111] border border-[#222222] hover:border-[#568f5e]/50 text-gray-300 hover:text-white rounded-md text-xs font-mono transition-colors"
@@ -152,7 +179,7 @@ export default function ContactSection() {
       {/* Footer Line */}
       <div className="border-t border-[#1e1e1e] pt-8 flex flex-col sm:flex-row items-center justify-between text-xs font-mono text-gray-500 gap-4">
         <div>
-          &copy; 2026 Hasinthaka Piyumal
+          {contact.footerText || "© 2026 Hasinthaka Piyumal. All rights reserved."}
         </div>
         <div className="flex items-center gap-1.5">
           <span>Crafted with code and curiosity.</span>

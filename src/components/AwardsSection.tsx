@@ -1,8 +1,9 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { Award, Trophy, Medal, CheckCircle } from "lucide-react";
 
-const awards = [
+const defaultAwards = [
   {
     num: "01",
     title: "Best Paper Award",
@@ -51,6 +52,28 @@ const awards = [
 ];
 
 export default function AwardsSection() {
+  const [awardList, setAwardList] = useState(defaultAwards);
+
+  useEffect(() => {
+    fetch("/api/admin/data")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && data.awards && data.awards.length > 0) {
+          const dynamicAwards = data.awards.map((a: any, idx: number) => ({
+            num: idx + 1 < 10 ? `0${idx + 1}` : `${idx + 1}`,
+            title: a.title,
+            issuer: a.organization || a.category || "Honors & Recognition",
+            year: a.year,
+            description: a.description || `Honored in ${a.year} under ${a.category || "Excellence"}.`,
+            tag: a.category || "Award",
+            icon: Award,
+          }));
+          setAwardList(dynamicAwards);
+        }
+      })
+      .catch((err) => console.error("Error fetching awards data:", err));
+  }, []);
+
   return (
     <section id="awards" className="py-10 md:py-24 border-t border-[#1e1e1e] relative">
       {/* Section Header */}
@@ -63,7 +86,7 @@ export default function AwardsSection() {
 
       {/* Awards List Container */}
       <div className="bg-[#111111] border border-[#202020] rounded-xl overflow-hidden divide-y divide-[#202020] shadow-2xl">
-        {awards.map((item) => {
+        {awardList.map((item) => {
           const Icon = item.icon;
           return (
             <div

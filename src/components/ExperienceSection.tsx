@@ -1,10 +1,12 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Calendar } from "lucide-react";
 import SpotlightCard from "./SpotlightCard";
+import type { ExperienceItem } from "@/lib/data";
 
-const experiences = [
+const defaultExperiences: ExperienceItem[] = [
   {
     role: "Software Engineer",
     company: "Zenlise",
@@ -32,6 +34,18 @@ const experiences = [
 ];
 
 export default function ExperienceSection() {
+  const [experiences, setExperiences] = useState<ExperienceItem[]>(defaultExperiences);
+
+  useEffect(() => {
+    fetch("/api/admin/data")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && data.experiences && data.experiences.length > 0) {
+          setExperiences(data.experiences);
+        }
+      })
+      .catch((err) => console.error("Error fetching experiences:", err));
+  }, []);
   return (
     <section id="experience" className="py-10 md:py-24 border-t border-[#1e1e1e] relative">
       {/* Section Header */}
@@ -55,7 +69,7 @@ export default function ExperienceSection() {
               {/* Logo Box - Desktop View (Hidden on mobile) */}
               <div className="hidden sm:flex w-12 h-12 sm:w-14 sm:h-14 relative rounded-xl border border-[#262626] bg-[#161616] items-center justify-center shrink-0 shadow-inner group-hover:border-[#568f5e]/50 transition-colors overflow-hidden">
                 <Image
-                  src={exp.logo}
+                  src={exp.logo || "/images/experience/freelancer.png"}
                   alt={exp.company}
                   width={48}
                   height={48}
@@ -70,7 +84,7 @@ export default function ExperienceSection() {
                 <div className="flex items-center gap-3 sm:hidden mb-1">
                   <div className="w-9 h-9 relative rounded-lg border border-[#262626] bg-[#161616] flex items-center justify-center shrink-0 overflow-hidden">
                     <Image
-                      src={exp.logo}
+                      src={exp.logo || "/images/experience/freelancer.png"}
                       alt={exp.company}
                       width={36}
                       height={36}

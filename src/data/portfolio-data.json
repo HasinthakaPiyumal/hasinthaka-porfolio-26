@@ -1,0 +1,314 @@
+{
+  "hero": {
+    "eyebrow": "SOFTWARE ENGINEER & RESEARCHER",
+    "headlineLine1": "I TURN COMPLEX",
+    "headlineLine2": "PROBLEMS INTO",
+    "headlineAccent": "SOLUTIONS.",
+    "description1": "I build systems, tools and intelligent applications that create real impact.",
+    "description2": "Currently open to meaningful opportunities.",
+    "ctaText": "VIEW MY WORK",
+    "statusBadgeText": "STATUS: Building",
+    "backgroundImage": "/images/84c0cdca-1d5e-4613-b846-504afd8f5221.webp"
+  },
+  "about": {
+    "fullName": "Hasinthaka Piyumal",
+    "titleBadge": "Software Engineer & Final-Year Undergraduate",
+    "profileImage": "/images/about-portrait.jpg",
+    "subtitleBio": "Final-year Software Engineering student at University of Kelaniya. Specializing in distributed backend microservices, applied machine learning pipelines, and full-stack web/mobile application development.",
+    "narrativeParagraph1": "With 3+ years of freelance experience delivering web and mobile apps alongside enterprise engineering experience at WSO2 and Zenlise, I build software that balances technical rigor with real-world product reliability.",
+    "narrativeParagraph2": "My academic research in AI design pattern prevalence won the Best Paper Award at PATTERNS 2026 and is published on arXiv.",
+    "certifications": [
+      "IBM Machine Learning Certified",
+      "Duke University Explainable AI (XAI)"
+    ],
+    "signatureQuote": "Let's build something impactful.",
+    "yearsExperience": "3+",
+    "productionApps": "4+",
+    "arxivPapers": "1",
+    "awardNotice": "PATTERNS 2026"
+  },
+  "projects": [
+    {
+      "num": "07",
+      "title": "",
+      "category": "Full-Stack",
+      "year": "2026",
+      "date": "Aug 2025",
+      "status": "Published",
+      "description": "",
+      "fullDescription": "",
+      "tags": [
+        "Next.js",
+        "React"
+      ],
+      "images": [
+        "/images/projects/zenlise.jpg",
+        "/images/experience/1786276538252-hero-mobile-final.webp"
+      ],
+      "featured": true
+    },
+    {
+      "num": "01",
+      "title": "Zenlise Platform",
+      "category": "SaaS",
+      "year": "2026",
+      "date": "Aug 2025",
+      "status": "Published",
+      "description": "Microservices platform in Go & Python automating app deployment and store compliance checks with Redis task queues & Azure cloud.",
+      "fullDescription": "Zenlise is an enterprise microservice platform engineered to streamline and automate multi-platform app publishing workflows. Built with Go microservices and Python automation workers, the architecture features asynchronous task queues powered by Redis and automated cloud deployment pipelines on Azure cloud infrastructure.",
+      "tags": [
+        "Go",
+        "Python",
+        "Next.js",
+        "Redis",
+        "Docker",
+        "Azure"
+      ],
+      "images": [
+        "/images/projects/zenlise.jpg",
+        "/images/projects/documind.jpg",
+        "/images/projects/shopease.jpg"
+      ],
+      "githubUrl": "https://github.com/HasinthakaPiyumal",
+      "demoUrl": "https://zenlise.dev",
+      "featured": false
+    },
+    {
+      "num": "02",
+      "title": "AI Design Pattern Mining",
+      "category": "Research",
+      "year": "2026",
+      "date": "Jul 2025",
+      "status": "Published",
+      "description": "Empirical methodology tool for detecting AI architectural patterns in software repositories using call-graph community chunking.",
+      "fullDescription": "Research software tool powering the arXiv:2607.00558 publication. Extracts abstract syntax trees and call-graphs from multi-language code bases to detect and classify AI design pattern prevalence.",
+      "tags": [
+        "Python",
+        "NetworkX",
+        "ArXiv",
+        "Scikit-Learn"
+      ],
+      "images": [
+        "/images/projects/hippocortex.jpg",
+        "/images/projects/zenlise.jpg"
+      ],
+      "githubUrl": "https://github.com/HasinthakaPiyumal",
+      "moreUrl": "https://arxiv.org/abs/2607.00558",
+      "featured": true
+    },
+    {
+      "num": "03",
+      "title": "HippoCortex",
+      "category": "AI/ML",
+      "year": "2026",
+      "date": "May 2025",
+      "status": "Published",
+      "description": "Edge-based facial recognition entry system using Flutter & MobileFaceNet with real-time anti-spoofing and liveness detection algorithms.",
+      "fullDescription": "Northstar is an edge-native biometric entry control platform. Utilizing TensorFlow Lite MobileFaceNet embeddings on client hardware, it performs real-time liveness verification, anti-spoofing texture detection, and instant vector matching for secure access management.",
+      "tags": [
+        "Flutter",
+        "TensorFlow Lite",
+        "Python",
+        "Edge AI"
+      ],
+      "images": [
+        "/images/projects/shopease.jpg",
+        "/images/projects/hippocortex.jpg"
+      ],
+      "githubUrl": "https://github.com/HasinthakaPiyumal",
+      "moreUrl": "https://arxiv.org/abs/2607.00558",
+      "featured": true
+    },
+    {
+      "num": "06",
+      "title": "Distributed Task Queue Engine",
+      "category": "Backend & AI",
+      "year": "2025",
+      "date": "Feb 2025",
+      "status": "Published",
+      "description": "High-throughput asynchronous job processing engine written in Go with Redis queue backend, failure retries, and metrics dashboard.",
+      "fullDescription": "A distributed, high-performance background job processing framework built in Go. Features concurrent worker pools, Redis-backed persistent state, customizable retry backoffs, dead-letter queue routing, and Prometheus metrics telemetry.",
+      "tags": [
+        "Go",
+        "Redis",
+        "Docker",
+        "Prometheus"
+      ],
+      "images": [
+        "/images/projects/zenlise.jpg"
+      ],
+      "githubUrl": "https://github.com/HasinthakaPiyumal",
+      "featured": false
+    },
+    {
+      "num": "07",
+      "title": "WSO2 Enterprise Gateway Extension Suite",
+      "category": "Open Source",
+      "year": "2025",
+      "date": "Jan 2025",
+      "status": "Published",
+      "description": "API management extensions, OAuth2 custom authenticators, and Identity Server integration plugins built for enterprise middleware.",
+      "fullDescription": "Contributed enterprise middleware extensions to WSO2 API Manager and Identity Server. Developed custom Java/Ballerina OAuth2 authenticators, request transformation handlers, and rate-limiting enforcement interceptors.",
+      "tags": [
+        "Java",
+        "Spring Boot",
+        "Ballerina",
+        "OAuth2"
+      ],
+      "images": [
+        "/images/projects/hippocortex.jpg"
+      ],
+      "githubUrl": "https://github.com/HasinthakaPiyumal",
+      "moreUrl": "https://wso2.com",
+      "featured": false
+    },
+    {
+      "num": "08",
+      "title": "Call-Graph AI Pattern Extractor",
+      "category": "Backend & AI",
+      "year": "2024",
+      "date": "Dec 2024",
+      "status": "Published",
+      "description": "Empirical methodology tool for detecting AI architectural patterns in software repositories using call-graph community chunking.",
+      "fullDescription": "Research software tool powering the arXiv:2607.00558 publication. Extracts abstract syntax trees and call-graphs from multi-language code bases to detect and classify AI design pattern prevalence.",
+      "tags": [
+        "Python",
+        "NetworkX",
+        "ArXiv",
+        "Scikit-Learn"
+      ],
+      "images": [
+        "/images/projects/shopease.jpg"
+      ],
+      "githubUrl": "https://github.com/HasinthakaPiyumal",
+      "moreUrl": "https://arxiv.org/abs/2607.00558",
+      "featured": false
+    }
+  ],
+  "experiences": [
+    {
+      "role": "Engineering Intern",
+      "company": "WSO2",
+      "period": "2025 - 2026",
+      "description": "Contributed to enterprise middleware & identity management solutions, REST API integrations, and cloud-native backend service optimization.",
+      "tags": [
+        "Java",
+        "Spring Boot",
+        "Ballerina",
+        "Identity Server",
+        "APIM"
+      ],
+      "logo": "/images/experience/wso2.png"
+    },
+    {
+      "role": "Full Stack Developer",
+      "company": "Freelance",
+      "period": "2023 - Present",
+      "description": "Building scalable web & mobile apps for international clients using React, Next.js, Flutter, and cloud database architectures.",
+      "tags": [
+        "React",
+        "Next.js",
+        "Flutter",
+        "Node.js",
+        "PostgreSQL"
+      ],
+      "logo": "/images/experience/freelancer.png"
+    },
+    {
+      "role": "Software Engineer",
+      "company": "Zenlise",
+      "period": "2026 - Present",
+      "description": "Architecting automated app publishing microservices, deployment pipelines in Go & Python, task queues with Redis, and Azure cloud infrastructure.",
+      "tags": [
+        "Go",
+        "Python",
+        "Redis",
+        "Docker",
+        "Azure"
+      ],
+      "logo": "/images/experience/zenlise.png"
+    }
+  ],
+  "research": [
+    {
+      "citation": "arXiv:2607.00558",
+      "title": "A Methodology for Investigating AI Pattern Prevalence in Software Repositories",
+      "badge": "Best Paper Award (PATTERNS 2026)",
+      "badgeType": "award",
+      "summary": "Proposed an empirical methodology to measure AI design patterns using call-graph community chunking and active learning strategies.",
+      "href": "https://arxiv.org/abs/2607.00558"
+    },
+    {
+      "citation": "Ongoing Research",
+      "title": "HippoCortex: Continual Learning & Data-Efficient Memory Architecture",
+      "badge": "Ongoing Research",
+      "badgeType": "ongoing",
+      "summary": "Developing a novel neural architecture for continual edge-based facial recognition and liveness detection with fast, data-efficient memory management.",
+      "href": "#"
+    }
+  ],
+  "awards": [
+    {
+      "id": "award-1",
+      "title": "WSO2 Research Grant",
+      "year": "2025",
+      "category": "Research Excellence"
+    },
+    {
+      "id": "award-3",
+      "title": "Best Project Award",
+      "year": "2024",
+      "category": "SLIIT"
+    },
+    {
+      "id": "award-4",
+      "title": "Certificate of Achievement",
+      "year": "2023",
+      "category": "Web Development"
+    }
+  ],
+  "approachAndTools": {
+    "pillars": [
+      {
+        "title": "Modular Microservices",
+        "description": "Designing decoupled, event-driven architectures with Go, Python & Redis queues."
+      },
+      {
+        "title": "High-Performance Backends",
+        "description": "Optimizing REST APIs, Spring Boot services, and database queries for low latency."
+      },
+      {
+        "title": "Cross-Platform Mobile",
+        "description": "Engineering native-like Flutter mobile apps for iOS and Android."
+      },
+      {
+        "title": "Clean Code & Testing",
+        "description": "Enforcing test coverage, CI/CD pipelines, and rigorous software architecture."
+      }
+    ],
+    "techCategories": [
+      {
+        "title": "Languages",
+        "tools": [
+          "JavaScript"
+        ]
+      },
+      {
+        "title": "AI & Data Tools",
+        "tools": [
+          "TensorFlow Lite"
+        ]
+      }
+    ]
+  },
+  "contact": {
+    "email": "hasinthaka@example.com",
+    "phone": "+94 77 123 4567",
+    "github": "https://github.com/HasinthakaPiyumal",
+    "linkedin": "https://linkedin.com/in/HasinthakaPiyumal",
+    "twitter": "https://twitter.com/HasinthakaPiyumal",
+    "availabilityStatus": "Open to Opportunities",
+    "footerText": "© 2026 Hasinthaka Piyumal. All rights reserved."
+  },
+  "lastUpdated": "Aug 9, 2026, 09:23 PM by Hasinthaka"
+}
