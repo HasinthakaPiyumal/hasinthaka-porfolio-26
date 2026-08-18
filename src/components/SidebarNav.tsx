@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { Menu, X } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -91,9 +92,18 @@ export default function SidebarNav({ activeSection }: SidebarNavProps) {
       <header className="md:hidden fixed top-0 left-0 right-0 z-50 bg-[#0d0d0d]/95 backdrop-blur-md border-b border-[#222222] px-5 py-3.5 flex items-center justify-between">
         <button
           onClick={() => scrollToSection("home")}
-          className="text-2xl font-bold font-bebas tracking-widest text-white flex items-center gap-0.5"
+          className="flex items-center gap-2.5 hover:opacity-90 transition-opacity cursor-pointer"
         >
-          H<span className="text-[#568f5e]">._</span>
+          <div className="relative w-8 h-8 rounded-lg bg-[#141414] border border-[#222222] p-1 flex items-center justify-center shadow-md">
+            <Image
+              src="/logo.png"
+              alt="Hasinthaka Logo"
+              width={24}
+              height={24}
+              className="object-contain drop-shadow-[0_0_6px_rgba(56,189,248,0.3)]"
+              priority
+            />
+          </div>
         </button>
 
         <button
@@ -147,12 +157,21 @@ export default function SidebarNav({ activeSection }: SidebarNavProps) {
       <aside className="hidden md:flex fixed top-0 left-0 bottom-0 w-60 lg:w-64 bg-[#0a0a0a] border-r border-[#1a1a1a] flex-col justify-between p-7 lg:p-8 z-40">
         <div>
           {/* Logo */}
-          <div className="mb-14">
+          <div className="mb-12">
             <button
               onClick={() => scrollToSection("home")}
-              className="text-4xl font-bold font-bebas tracking-widest text-white hover:opacity-90 transition-opacity flex items-center gap-0.5"
+              className="flex items-center gap-3 hover:opacity-90 transition-opacity group cursor-pointer"
             >
-              H<span className="text-[#568f5e]">._</span>
+              <div className="relative w-12 h-12 rounded-xl bg-[#141414] border border-[#222222] p-1.5 flex items-center justify-center shadow-lg group-hover:border-[#568f5e]/40 transition-colors">
+                <Image
+                  src="/logo.png"
+                  alt="Hasinthaka Logo"
+                  width={38}
+                  height={38}
+                  className="object-contain drop-shadow-[0_0_8px_rgba(56,189,248,0.25)]"
+                  priority
+                />
+              </div>
             </button>
           </div>
 

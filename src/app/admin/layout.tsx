@@ -160,8 +160,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       {/* Mobile Top Header Bar (< md) */}
       <div className="md:hidden bg-[#0c0c0c] border-b border-[#1a1a1a] p-4 flex items-center justify-between sticky top-0 z-40">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-[#568f5e] text-white font-bold flex items-center justify-center text-sm shadow-md">
-            H
+          <div className="w-8 h-8 rounded-lg bg-[#141414] border border-[#222222] p-1 flex items-center justify-center shadow-md">
+            <Image
+              src="/logo.png"
+              alt="Hasinthaka Logo"
+              width={24}
+              height={24}
+              className="object-contain"
+            />
           </div>
           <div>
             <div className="text-xs font-bold text-white tracking-wider uppercase">HASINTHAKA</div>
@@ -229,8 +235,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <div className="space-y-6 overflow-y-auto custom-scrollbar pr-1">
           {/* Logo */}
           <div className="flex items-center gap-3 pt-1">
-            <div className="w-9 h-9 rounded-xl bg-[#568f5e] text-white font-bold flex items-center justify-center text-lg shadow-md shrink-0">
-              H
+            <div className="w-9 h-9 rounded-xl bg-[#141414] border border-[#222222] p-1 flex items-center justify-center shadow-md shrink-0">
+              <Image
+                src="/logo.png"
+                alt="Hasinthaka Logo"
+                width={28}
+                height={28}
+                className="object-contain"
+              />
             </div>
             <div>
               <h1 className="text-sm font-bold text-white tracking-wider uppercase leading-none">
