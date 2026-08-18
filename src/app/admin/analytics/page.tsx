@@ -3,9 +3,8 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { 
   BarChart3, Users, Eye, Globe2, MapPin, Monitor, Smartphone, RefreshCw, Check, Copy, 
-  Search, ShieldCheck, ChevronDown, ChevronRight, Compass, Clock, ArrowRight, Layers, Play, Film, Timer 
+  Search, ShieldCheck, ChevronDown, ChevronRight, Compass, Clock, ArrowRight, Layers, Timer 
 } from "lucide-react";
-import SessionReplayerModal from "@/components/SessionReplayerModal";
 
 function formatDuration(seconds: number): string {
   if (!seconds || seconds <= 0) return "0s";
@@ -58,7 +57,6 @@ export default function AdminAnalyticsPage() {
   const [copiedIp, setCopiedIp] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [expandedIps, setExpandedIps] = useState<Record<string, boolean>>({});
-  const [selectedReplaySessionId, setSelectedReplaySessionId] = useState<string | null>(null);
 
   // Pagination states
   const [currentPage, setCurrentPage] = useState(1);
@@ -135,7 +133,7 @@ export default function AdminAnalyticsPage() {
             <span>Visitor Analytics & IP Telemetry</span>
           </h1>
           <p className="text-xs text-gray-400 pt-0.5">
-            Monitor unique user IP addresses, active engagement duration, visited paths, and session replays.
+            Monitor unique user IP addresses, active engagement duration, and visited paths.
           </p>
         </div>
 
@@ -429,55 +427,51 @@ export default function AdminAnalyticsPage() {
                             {/* Nested Sub-Table */}
                             <div className="bg-[#141414] rounded-xl border border-[#222222] overflow-hidden">
                               <table className="w-full text-left text-[11px]">
-                                <thead>
-                                  <tr className="border-b border-[#222222] bg-[#181818] text-gray-400 text-[10px] uppercase font-semibold">
-                                    <th className="py-2.5 px-3.5">#</th>
-                                    <th className="py-2.5 px-3.5">Timestamp</th>
-                                    <th className="py-2.5 px-3.5">Visited Path / Section</th>
-                                    <th className="py-2.5 px-3.5">Active Time</th>
-                                    <th className="py-2.5 px-3.5">Referrer</th>
-                                    <th className="py-2.5 px-3.5 text-right">Session Replay</th>
-                                  </tr>
-                                </thead>
-                                <tbody className="divide-y divide-[#1e1e1e]">
-                                  {visitor.visits.map((visit: VisitDetail, idx: number) => (
-                                    <tr key={visit.id || idx} className="hover:bg-[#1a1a1a]">
-                                      <td className="py-2.5 px-3.5 text-gray-500 font-mono">{visitor.visits.length - idx}</td>
-                                      <td className="py-2.5 px-3.5 text-gray-300 whitespace-nowrap">
-                                        {new Date(visit.timestamp).toLocaleString("en-US", {
-                                          month: "short",
-                                          day: "numeric",
-                                          hour: "2-digit",
-                                          minute: "2-digit",
-                                          second: "2-digit",
-                                        })}
-                                      </td>
-                                      <td className="py-2.5 px-3.5 font-semibold text-white">
-                                        <span className="inline-flex items-center gap-1.5 text-[#568f5e] bg-[#1c291d] border border-[#2e4732] px-2 py-0.5 rounded text-[10px]">
-                                          <Compass size={11} />
-                                          <span>{visit.path || "/"}</span>
-                                        </span>
-                                      </td>
-                                      <td className="py-2.5 px-3.5 text-gray-300 font-mono">
-                                        {formatDuration(visit.activeDurationSeconds || 0)}
-                                      </td>
-                                      <td className="py-2.5 px-3.5 text-gray-400">{visit.referrer || "Direct"}</td>
-                                      <td className="py-2.5 px-3.5 text-right">
-                                        {visit.sessionId ? (
-                                          <button
-                                            onClick={() => setSelectedReplaySessionId(visit.sessionId!)}
-                                            className="inline-flex items-center gap-1 px-2.5 py-1 bg-[#568f5e] hover:bg-[#487a4f] text-white text-[10px] font-bold rounded transition-colors cursor-pointer shadow-sm"
-                                          >
-                                            <Play size={10} fill="currentColor" />
-                                            <span>Replay Session</span>
-                                          </button>
-                                        ) : (
-                                          <span className="text-[10px] text-gray-600 font-mono">No Recording</span>
-                                        )}
-                                      </td>
-                                    </tr>
-                                  ))}
-                                </tbody>
+                                 <thead>
+                                   <tr className="border-b border-[#222222] bg-[#181818] text-gray-400 text-[10px] uppercase font-semibold">
+                                     <th className="py-2.5 px-3.5">#</th>
+                                     <th className="py-2.5 px-3.5">Timestamp</th>
+                                     <th className="py-2.5 px-3.5">Visited Path / Section</th>
+                                     <th className="py-2.5 px-3.5">Active Time</th>
+                                     <th className="py-2.5 px-3.5">Referrer</th>
+                                     <th className="py-2.5 px-3.5 text-right">Session ID</th>
+                                   </tr>
+                                 </thead>
+                                 <tbody className="divide-y divide-[#1e1e1e]">
+                                   {visitor.visits.map((visit: VisitDetail, idx: number) => (
+                                     <tr key={visit.id || idx} className="hover:bg-[#1a1a1a]">
+                                       <td className="py-2.5 px-3.5 text-gray-500 font-mono">{visitor.visits.length - idx}</td>
+                                       <td className="py-2.5 px-3.5 text-gray-300 whitespace-nowrap">
+                                         {new Date(visit.timestamp).toLocaleString("en-US", {
+                                           month: "short",
+                                           day: "numeric",
+                                           hour: "2-digit",
+                                           minute: "2-digit",
+                                           second: "2-digit",
+                                         })}
+                                       </td>
+                                       <td className="py-2.5 px-3.5 font-semibold text-white">
+                                         <span className="inline-flex items-center gap-1.5 text-[#568f5e] bg-[#1c291d] border border-[#2e4732] px-2 py-0.5 rounded text-[10px]">
+                                           <Compass size={11} />
+                                           <span>{visit.path || "/"}</span>
+                                         </span>
+                                       </td>
+                                       <td className="py-2.5 px-3.5 text-gray-300 font-mono">
+                                         {formatDuration(visit.activeDurationSeconds || 0)}
+                                       </td>
+                                       <td className="py-2.5 px-3.5 text-gray-400">{visit.referrer || "Direct"}</td>
+                                       <td className="py-2.5 px-3.5 text-right">
+                                         {visit.sessionId ? (
+                                           <span className="text-[10px] text-gray-400 font-mono bg-[#1c1c1c] border border-[#282828] px-2 py-0.5 rounded">
+                                             {visit.sessionId.length > 16 ? `${visit.sessionId.substring(0, 14)}...` : visit.sessionId}
+                                           </span>
+                                         ) : (
+                                           <span className="text-[10px] text-gray-600 font-mono">-</span>
+                                         )}
+                                       </td>
+                                     </tr>
+                                   ))}
+                                 </tbody>
                               </table>
                             </div>
                           </td>
@@ -545,14 +539,6 @@ export default function AdminAnalyticsPage() {
         </div>
 
       </div>
-
-      {/* Session Replayer Modal */}
-      {selectedReplaySessionId && (
-        <SessionReplayerModal
-          sessionId={selectedReplaySessionId}
-          onClose={() => setSelectedReplaySessionId(null)}
-        />
-      )}
     </div>
   );
 }

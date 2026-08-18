@@ -2,11 +2,10 @@
 
 import { useEffect, useRef } from "react";
 import { Analytics } from "@vercel/analytics/react";
-import SessionRecorder from "./SessionRecorder";
 
 export function AnalyticsTracker() {
   const activeSecondsRef = useRef<number>(0);
-  const isVisibleRef = useRef<boolean>(true);
+  const sentUnloadRef = useRef<boolean>(false);
 
   useEffect(() => {
     let sid = sessionStorage.getItem("portfolio_session_id");
@@ -34,46 +33,49 @@ export function AnalyticsTracker() {
       }
     };
 
-    // Initial page view ping
+    // Initial page view (Single call on page load)
     trackView(false);
 
-    // Active Engagement Timer: Increment every second if document is visible
+    // Increment active duration locally every second without making any network requests
     const timer = setInterval(() => {
       if (document.visibilityState === "visible") {
         activeSecondsRef.current += 1;
       }
     }, 1000);
 
-    // Periodic ping every 10s to sync activeDurationSeconds with backend
-    const pingInterval = setInterval(() => {
-      if (document.visibilityState === "visible" && activeSecondsRef.current > 0) {
-        trackView(true);
-      }
-    }, 10000);
+    // Send final active duration only on page leave/unload using lightweight sendBeacon
+    const handleUnload = () => {
+      if (sentUnloadRef.current || activeSecondsRef.current <= 0) return;
+      sentUnloadRef.current = true;
 
-    // Visibility & Unload listeners
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === "hidden") {
-        trackView(true);
-      }
+      const blob = new Blob(
+        [
+          JSON.stringify({
+            path: window.location.pathname,
+            sessionId: sid,
+            activeDurationSeconds: activeSecondsRef.current,
+            isPing: true,
+          }),
+        ],
+        { type: "application/json" }
+      );
+      navigator.sendBeacon("/api/analytics/track", blob);
     };
 
-    window.addEventListener("hashchange", () => trackView(false));
-    document.addEventListener("visibilitychange", handleVisibilityChange);
+    window.addEventListener("beforeunload", handleUnload);
+    window.addEventListener("pagehide", handleUnload);
 
     return () => {
       clearInterval(timer);
-      clearInterval(pingInterval);
-      window.removeEventListener("hashchange", () => trackView(false));
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
-      trackView(true);
+      window.removeEventListener("beforeunload", handleUnload);
+      window.removeEventListener("pagehide", handleUnload);
+      handleUnload();
     };
   }, []);
 
   return (
     <>
       <Analytics />
-      <SessionRecorder />
     </>
   );
 }
