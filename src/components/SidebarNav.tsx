@@ -94,16 +94,15 @@ export default function SidebarNav({ activeSection }: SidebarNavProps) {
           onClick={() => scrollToSection("home")}
           className="flex items-center gap-2.5 hover:opacity-90 transition-opacity cursor-pointer"
         >
-          <div className="relative w-8 h-8 rounded-lg bg-[#141414] border border-[#222222] p-1 flex items-center justify-center shadow-md">
-            <Image
-              src="/logo.png"
-              alt="Hasinthaka Logo"
-              width={24}
-              height={24}
-              className="object-contain drop-shadow-[0_0_6px_rgba(56,189,248,0.3)]"
-              priority
-            />
-          </div>
+          {/* <div className="relative w-8 h-8 rounded-lg  border border-[#222222] p-1 flex items-center justify-center shadow-md"> */}
+          <div
+            className="h-[38px] w-[38px] bg-[#568f5e] mask-contain mask-center mask-no-repeat drop-shadow-[0_0_8px_rgba(124,58,237,0.25)]"
+            style={{
+              maskImage: "url('/logo-n.png')",
+              WebkitMaskImage: "url('/logo-n.png')",
+            }}
+          />
+          {/* </div> */}
         </button>
 
         <button
@@ -125,9 +124,8 @@ export default function SidebarNav({ activeSection }: SidebarNavProps) {
                 <button
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
-                  className={`relative flex items-center gap-5 text-xl font-mono text-left transition-colors duration-200 ${
-                    isActive ? "text-[#568f5e] font-semibold" : "text-gray-400 hover:text-white"
-                  }`}
+                  className={`relative flex items-center gap-5 text-xl font-mono text-left transition-colors duration-200 ${isActive ? "text-[#568f5e] font-semibold" : "text-gray-400 hover:text-white"
+                    }`}
                 >
                   <span className="text-xs font-mono text-gray-500">{item.num}</span>
                   <span>{item.label}</span>
@@ -162,16 +160,15 @@ export default function SidebarNav({ activeSection }: SidebarNavProps) {
               onClick={() => scrollToSection("home")}
               className="flex items-center gap-3 hover:opacity-90 transition-opacity group cursor-pointer"
             >
-              <div className="relative w-12 h-12 rounded-xl bg-[#141414] border border-[#222222] p-1.5 flex items-center justify-center shadow-lg group-hover:border-[#568f5e]/40 transition-colors">
-                <Image
-                  src="/logo.png"
-                  alt="Hasinthaka Logo"
-                  width={38}
-                  height={38}
-                  className="object-contain drop-shadow-[0_0_8px_rgba(56,189,248,0.25)]"
-                  priority
-                />
-              </div>
+              {/* <div className="relative w-12 h-12 rounded-xl bg-[#9c9595] border border-[#222222] p-1.5 flex items-center justify-center shadow-lg group-hover:border-[#568f5e]/40 transition-colors"> */}
+              <div
+                className="h-[38px] w-[38px] bg-[#568f5e] mask-contain mask-center mask-no-repeat drop-shadow-[0_0_8px_rgba(124,58,237,0.25)]"
+                style={{
+                  maskImage: "url('/logo-n.png')",
+                  WebkitMaskImage: "url('/logo-n.png')",
+                }}
+              />
+              {/* </div> */}
             </button>
           </div>
 
@@ -183,15 +180,14 @@ export default function SidebarNav({ activeSection }: SidebarNavProps) {
                 <button
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
-                  className={`group relative flex items-center gap-4 text-sm font-mono text-left transition-all duration-200 py-0.5 ${
-                    isActive ? "text-[#568f5e] font-semibold" : "text-gray-400 hover:text-white"
-                  }`}
+                  className={`group relative flex items-center gap-4 text-sm font-mono text-left transition-all duration-200 py-0.5 ${isActive ? "text-[#568f5e] font-semibold" : "text-gray-400 hover:text-white"
+                    }`}
                 >
                   <span className={`text-xs ${isActive ? "text-gray-400 font-normal" : "text-gray-600 group-hover:text-gray-400"}`}>
                     {item.num}
                   </span>
                   <span className="tracking-wide">{item.label}</span>
-                  
+
                   {isActive && (
                     <>
                       <motion.span

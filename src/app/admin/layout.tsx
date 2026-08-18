@@ -162,7 +162,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <div className="flex items-center gap-2.5">
           <div className="w-8 h-8 rounded-lg bg-[#141414] border border-[#222222] p-1 flex items-center justify-center shadow-md">
             <Image
-              src="/logo.png"
+              src="/logo-n.png"
               alt="Hasinthaka Logo"
               width={24}
               height={24}
@@ -237,7 +237,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <div className="flex items-center gap-3 pt-1">
             <div className="w-9 h-9 rounded-xl bg-[#141414] border border-[#222222] p-1 flex items-center justify-center shadow-md shrink-0">
               <Image
-                src="/logo.png"
+                src="/logo-n.png"
                 alt="Hasinthaka Logo"
                 width={28}
                 height={28}
